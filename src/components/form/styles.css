@@ -1,0 +1,42 @@
+.container-form {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50px;
+  left: 100px;
+  background: #ccc;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-inputs {
+  display: flex;
+  flex-direction: row;
+}
+
+.container-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
