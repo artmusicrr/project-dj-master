@@ -4,6 +4,7 @@ import "./styles.css"
 import Form from "../form"
 
 const logo = "/assets/DJMASTER.png"
+const iconTitle = "./cd-small.ico"
 
 const Header: React.FC = () => {
   const [menuActive, setMenuActive] = React.useState(false)
