@@ -1,7 +1,5 @@
 import React, { useState, forwardRef } from "react"
 import "./styles.css"
-import { InputText } from "primereact/inputtext"
-import { FloatLabel } from "primereact/floatlabel"
 
 const Form = forwardRef<HTMLDivElement>((props, ref) => {
   const [eventoSelecionado, setEventoSelecionado] = useState("")
@@ -17,9 +15,6 @@ const Form = forwardRef<HTMLDivElement>((props, ref) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Lógica para enviar o formulário
-    // Aqui você pode adicionar sua lógica de envio do formulário, como chamadas de API, etc.
-    // Após o envio bem-sucedido, você pode definir o estado 'enviado' como true
     setTimeout(() => {
       setEnviado(true)
     }, 1000)
