@@ -181,7 +181,7 @@ const Section: React.FC = () => {
         </a>
 
         <a
-          href="https://wa.me/11972965062"
+          href="https://wa.me/5511972965062"
           target="_blank"
           rel="noopener noreferrer"
         >
