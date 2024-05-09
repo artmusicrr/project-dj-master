@@ -1,5 +1,7 @@
 import React, { useState, forwardRef } from "react"
 import "./styles.css"
+import { InputText } from "primereact/inputtext"
+import { FloatLabel } from "primereact/floatlabel"
 
 const Form = forwardRef<HTMLDivElement>((props, ref) => {
   const [eventoSelecionado, setEventoSelecionado] = useState("")
@@ -29,78 +31,76 @@ const Form = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div className="container-form" ref={ref}>
-      <h1>Formulário de contato</h1>
       {!enviado ? (
-        <form
-          onSubmit={handleSubmit}
-          action="https://formsubmit.co/artmusicrod@gmail.com"
-          method="POST"
-          className="form-container"
-        >
-          <div className="container-inputs">
-            <div className="container-left">
-              <label htmlFor="nome">Nome:</label>
-              <input
-                type="text"
-                placeholder="Digite seu nome"
-                name="name"
-                required
-              />
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                placeholder="Digite seu email"
-                name="email"
-                required
-              />
+        <>
+          <h1>Formulário de contato</h1>
+          <form
+            onSubmit={handleSubmit}
+            action="https://formsubmit.co/artmusicrod@gmail.com"
+            method="POST"
+            className="form-container"
+          >
+            <div className="container-inputs">
+              <div className="container-left">
+                <div className="label-float">
+                  <input type="text" placeholder=" " required />
+                  <label>Nome</label>
+                </div>
 
-              <label htmlFor="phone">Telefone:</label>
-              <input
-                type="text"
-                placeholder="Digite seu telefone"
-                name="phone"
-              />
-            </div>
-            <div className="container-right">
-              <label htmlFor="date">Data do Evento:</label>
-              <input
-                type="date"
-                placeholder="Digite a data do evento"
-                name="date"
-                required
-              />
+                <div className="label-float">
+                  <input type="email" placeholder=" " required />
+                  <label>E-mail</label>
+                </div>
 
-              <label htmlFor="local">Local do Evento:</label>
-              <input type="text" placeholder="Local do evento" name="local" />
+                <div className="label-float">
+                  <input type="text" placeholder=" " required />
+                  <label>Telefone</label>
+                </div>
 
-              <label htmlFor="type">Tipo de Evento:</label>
-              <select
-                className="select"
-                name="evento"
-                id="evento"
-                value={eventoSelecionado}
-                onChange={handleEventoChange}
-              >
-                {Object.entries(eventos).map(([key, value]) => (
-                  <option key={key} value={key}>
-                    {value}
-                  </option>
-                ))}
-              </select>
+                <div className="label-float">
+                  <input type="text" placeholder=" " required />
+                  <label>Local do Evento</label>
+                </div>
+                <div className="date-select">
+                  <div className="label-date">
+                    <label>Data do evento</label>
+                    <input type="date" placeholder=" " required />
+                  </div>
+
+                  <div className="select-container">
+                    <label htmlFor="type">Tipo de Evento:</label>
+                    <select
+                      className="select"
+                      name="evento"
+                      id="evento"
+                      value={eventoSelecionado}
+                      onChange={handleEventoChange}
+                    >
+                      {Object.entries(eventos).map(([key, value]) => (
+                        <option key={key} value={key}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="container-footer">
-            <div className="container-message">
-              <label htmlFor="message">Mensagem:</label>
-              <textarea
-                name="message"
-                placeholder="Mensagem"
-                required
-              ></textarea>
+            <div className="container-footer">
+              <div className="container-message">
+                <label htmlFor="message">Mensagem:</label>
+                <textarea
+                  name="message"
+                  placeholder="Mensagem"
+                  required
+                ></textarea>
+              </div>
+              <div className="container-button">
+                <button type="submit">Enviar</button>
+              </div>
             </div>
-            <button type="submit">Enviar</button>
-          </div>
-        </form>
+          </form>
+        </>
       ) : (
         <div className="mensagem-enviada">
           <p>O formulário foi enviado com sucesso!</p>
