@@ -173,7 +173,8 @@
     flex-direction: column;
     position: absolute;
     top: 50px;
-    left: 50px;
+    left: 10px;
+
     background: #aed3f5;
     padding: 10px;
     opacity: 0.9;
