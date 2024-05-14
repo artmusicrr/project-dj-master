@@ -114,6 +114,7 @@ const Section: React.FC = () => {
   // Função para lidar com o clique no botão de navegação
   const handleNavClick = (index: number) => {
     setActiveContentIndex(index)
+    window.scrollTo(0, 0); 
   }
 
   console.log("===> ", activeContentIndex)
