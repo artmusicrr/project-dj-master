@@ -11,8 +11,10 @@ export const Privada = () => {
 
   return (
     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <h1>Bem-vindo</h1>
+      <h1>{auth.name}</h1>
       <Button type="primary" htmlType="submit" onClick={handleLogout}>
-        Sign IN
+        Sign Out
       </Button>
     </Form.Item>
   )

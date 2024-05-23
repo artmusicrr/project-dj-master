@@ -14,10 +14,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     }
   }, [])
 
-  async function authenticate(username: string, password: string) {
-    const response = await loginRequest(username, password)
+  async function authenticate(name: string, password: string) {
+    const response = await loginRequest(name, password)
 
-    const payload = { token: response.token, username }
+    const payload = { token: response.token, name }
 
     setUser(payload)
     setUserLocalStorage(payload)
