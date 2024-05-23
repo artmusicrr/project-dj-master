@@ -9,9 +9,9 @@ export const Login = () => {
   const auth = useAuth()
   const navigate = useNavigate()
 
-  async function onfinish(values: { username: string; password: string }) {
+  async function onfinish(values: { name: string; password: string }) {
     try {
-      await auth.authenticate(values.username, values.password)
+      await auth.authenticate(values.name, values.password)
       navigate("/privada")
     } catch (error) {
       message.error("Invalid username or password")
@@ -23,11 +23,11 @@ export const Login = () => {
       justify="center"
       align="middle"
       style={{
-        //height: "100vh",
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center",
-        // justifyContent: "center",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Col span={12}>
@@ -37,7 +37,7 @@ export const Login = () => {
           wrapperCol={{ span: 16 }}
           onFinish={onfinish}
         >
-          <Form.Item label="username" name="username">
+          <Form.Item label="username" name="name">
             <Input />
           </Form.Item>
           <Form.Item label="password" name="password">
