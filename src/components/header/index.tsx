@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import "./styles.css"
 import Form from "../form"
@@ -10,6 +11,7 @@ const Header: React.FC = () => {
   const [menuActive, setMenuActive] = React.useState(false)
   const [formActive, setFormActive] = useState(false)
   const formRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   const toggleMenu = () => {
     if (!formActive) {
@@ -23,6 +25,9 @@ const Header: React.FC = () => {
     setFormActive(!formActive)
   }
 
+  const handleNavigate = () => {
+    navigate("/login")
+  }
   // const closeMenu = () => {
   //   setMenuActive(false)
   // }
@@ -69,6 +74,7 @@ const Header: React.FC = () => {
           >
             Contato
           </a>
+          <a href="#" onClick={handleNavigate}>ADM</a>
         </div>
       </div>
       {formActive && <Form ref={formRef} />}

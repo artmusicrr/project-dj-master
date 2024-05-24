@@ -11,15 +11,6 @@ import "./styles.css"
 const Section: React.FC = () => {
   const [activeContentIndex, setActiveContentIndex] = useState(0)
 
-  // URLs dos vídeos correspondentes a cada botão de navegação
-  // const videoUrls = [
-  //   "/assets/img-master/05.mp4",
-  //   "/assets/img-master/04.mp4",
-  //   "/assets/img-master/08.mp4",
-  //   "/assets/img-master/03.mp4",
-  //   "/assets/img-master/09.mp4",
-  // ]
-
   const imgUrls = [
     "/assets/img/100.jpg",
     "/assets/img/101.webp",
@@ -28,14 +19,14 @@ const Section: React.FC = () => {
     "/assets/img/104.jpg",
   ]
 
-  // Conteúdos correspondentes a cada vídeo
+  // Conteúdos correspondentes a cada slide
   const contentText = [
     {
       title: "Dj Master.",
       span: "",
       text: (
         <p>
-          Apresentamos DJ Master: O DJ e VDJ com mais de 30 anos de experiência{" "}
+          Apresentamos DJ Master: O DJ e VDJ com mais de 30 anos de experiência
           <br />
           Com um legado de mais de três décadas na cena dos eventos, Ronaldo
           Master é uma referência em animação e entretenimento. <br />
@@ -114,37 +105,21 @@ const Section: React.FC = () => {
   // Função para lidar com o clique no botão de navegação
   const handleNavClick = (index: number) => {
     setActiveContentIndex(index)
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
   }
 
   console.log("===> ", activeContentIndex)
 
   return (
     <section className="home">
-      {/* Renderiza os vídeos com base no estado activeNavIndex */}
-
       {imgUrls.map((url, index) => (
         <img
           key={index}
           src={url}
-          className={`video-slide ${
-            index === activeContentIndex ? "active" : ""
-          }`}
+          className={`video-slide ${index === activeContentIndex ? "active" : ""
+            }`}
         />
       ))}
-
-      {/* {videoUrls.map((url, index) => (
-        <video
-          key={index}
-          src={url}
-          className={`video-slide ${
-            index === activeContentIndex ? "active" : ""
-          }`}
-          muted
-          loop
-          autoPlay
-        ></video>
-      ))} */}
 
       {contentText.map((content_text, index) => (
         <div
@@ -195,9 +170,8 @@ const Section: React.FC = () => {
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
-            className={`nav-btn ${
-              index === activeContentIndex ? "active" : ""
-            }`}
+            className={`nav-btn ${index === activeContentIndex ? "active" : ""
+              }`}
             onClick={() => handleNavClick(index)}
           ></div>
         ))}
