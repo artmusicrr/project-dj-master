@@ -17,7 +17,7 @@ export const updateText = async (query: any, id: any, content: any, ) => {
       }
   
       const data = await response.json();
-      console.log("Data:", data)
+      console.log("Data API==>:", data)
       return data;
     
   };
