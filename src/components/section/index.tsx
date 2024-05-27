@@ -8,8 +8,17 @@ import {
 import React, { useState } from "react"
 import "./styles.css"
 
+
 const Section: React.FC = () => {
   const [activeContentIndex, setActiveContentIndex] = useState(0)
+
+  const [contents, setContents] = useState([
+    { id_text: 1, title: "", subTitle: "", text: "", anyText: "" },
+    { id_text: 2, title: "", subTitle: "", text: "", anyText: "" },
+    { id_text: 3, title: "", subTitle: "", text: "", anyText: "" },
+    { id_text: 4, title: "", subTitle: "", text: "", anyText: "" },
+    { id_text: 5, title: "", subTitle: "", text: "", anyText: "" },
+  ]);
 
   const imgUrls = [
     "/assets/img/100.jpg",
@@ -19,93 +28,38 @@ const Section: React.FC = () => {
     "/assets/img/104.jpg",
   ]
 
-  // Conteúdos correspondentes a cada slide
-  const contentText = [
-    {
-      title: "Dj Master.",
-      span: "",
-      text: (
-        <p>
-          Apresentamos DJ Master: O DJ e VDJ com mais de 30 anos de experiência
-          <br />
-          Com um legado de mais de três décadas na cena dos eventos, Ronaldo
-          Master é uma referência em animação e entretenimento. <br />
-          Especializado em uma variedade de ocasiões, desde casamentos e
-          aniversários até grandes confraternizações corporativas, Ronaldo tem a
-          expertise e o talento necessários para tornar qualquer evento
-          memorável e cheio de energia.
-        </p>
-      ),
-    },
-    {
-      title: "Experiência que Fala por Si.",
-      span: "",
-      text: (
-        <p>
-          Com mais de 30 anos dedicados à arte de animar festas, DJ Master
-          acumulou uma rica bagagem de experiências. <br />
-          Sua jornada começou há décadas, e desde então ele tem sido o maestro
-          por trás de inúmeros momentos inesquecíveis. <br />
-          Sua paixão pela música e pelos vídeos o levou a aprimorar suas
-          habilidades, garantindo que cada evento seja único e personalizado de
-          acordo com as preferências dos clientes.
-        </p>
-      ),
-    },
-    {
-      title: " Repertório Inigualável.",
-      span: "",
-      text: (
-        <p>
-          Uma das características distintivas de DJ Master é o seu extenso
-          repertório musical e de clipes de vídeo. <br />
-          Desde os clássicos atemporais até as batidas mais modernas, ele possui
-          uma biblioteca abrangente que agrada a todos os gostos e idades.{" "}
-          <br />
-          Além disso, como VDJ, Ronaldo combina música e vídeo de maneira fluida
-          e criativa, elevando a experiência do público a um novo nível de
-          imersão e diversão.
-        </p>
-      ),
-    },
-    {
-      title: "Eventos para Todas as Ocasiões. ",
-      span: "",
-      text: (
-        <p>
-          Seja qual for a ocasião, Ronaldo Master está pronto para transformá-la
-          em uma celebração inesquecível. <br />
-          De casamentos românticos a festas de aniversário cheias de energia,
-          ele adapta sua performance para atender às necessidades específicas de
-          cada evento. <br />
-          Sua experiência e profissionalismo garantem que tudo transcorra sem
-          problemas, deixando os clientes livres para aproveitar ao máximo o
-          momento especial.
-        </p>
-      ),
-    },
-    {
-      title: "Transforme seu Evento com Dj Master",
-      span: "",
-      text: (
-        <p>
-          Seja qual for a ocasião, Ronaldo Master está pronto para transformá-la
-          em uma celebração inesquecível. <br />
-          De casamentos românticos a festas de aniversário cheias de energia,
-          ele adapta sua performance para atender às necessidades específicas de
-          cada evento. <br />
-          Sua experiência e profissionalismo garantem que tudo transcorra sem
-          problemas, deixando os clientes livres para aproveitar ao máximo o
-          momento especial.
-        </p>
-      ),
-    },
-  ]
+  fetch("http://localhost:4000/title")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.json()
+    })
+    .then((data: any) => {
+      console.log("Data:", data)
+      const updatesContents = contents.map((content: any) => {
+        const item = data.find((item: { id_text: number }) => item.id_text === content.id_text)   
+          return item? { ...content, ...item }: content;
+        }
+      )
+      setContents(updatesContents);
+    })
+    .catch((error) => {
+      console.error("Error:", error)
+      // Faça o tratamento de erro adequado
+    })
+
+ 
+  const contentText = contents.map((content) => ({
+    title: content.title,
+    span: content.subTitle,
+    text: <p>{content.text}</p>,
+  }));
 
   // Função para lidar com o clique no botão de navegação
   const handleNavClick = (index: number) => {
     setActiveContentIndex(index)
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   console.log("===> ", activeContentIndex)
@@ -116,8 +70,9 @@ const Section: React.FC = () => {
         <img
           key={index}
           src={url}
-          className={`video-slide ${index === activeContentIndex ? "active" : ""
-            }`}
+          className={`video-slide ${
+            index === activeContentIndex ? "active" : ""
+          }`}
         />
       ))}
 
@@ -128,8 +83,8 @@ const Section: React.FC = () => {
         >
           <h1>{content_text.title}</h1>
           <span>{content_text.span}</span>
-          <p>{content_text.text}</p>
-          <a href="#"> Read More</a>
+          <span className="line">{content_text.text}</span>
+          {/* <a href="#"> Read More</a> */}
         </div>
       ))}
 
@@ -170,8 +125,9 @@ const Section: React.FC = () => {
         {Array.from({ length: 5 }).map((_, index) => (
           <div
             key={index}
-            className={`nav-btn ${index === activeContentIndex ? "active" : ""
-              }`}
+            className={`nav-btn ${
+              index === activeContentIndex ? "active" : ""
+            }`}
             onClick={() => handleNavClick(index)}
           ></div>
         ))}
