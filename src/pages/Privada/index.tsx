@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import "./styles.css"
 import { HeaderProtected } from "../../components/headerProtected/index"
@@ -9,7 +9,17 @@ export const Privada = () => {
   const [idSelected, setidSelected] = useState("")
   const [querySelected, setQuerySelected] = useState("")
 
+  console.log("ID ==>:", idSelected)
+
   const auth = useAuth()
+
+  useEffect(() => {
+    // Set valores padrão para idSelected e querySelected com base nas primeiras opções
+    const firstImageId = Object.keys(imageSelected)[0]
+    const firstTextQuery = Object.keys(textSelected)[0]
+    setidSelected(firstImageId)
+    setQuerySelected(firstTextQuery)
+  }, []) // Executar apenas uma vez na montagem do componente
 
   const handleEventoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setidSelected(e.target.value)
@@ -74,8 +84,8 @@ export const Privada = () => {
                   </label>
                   <select
                     className="select"
-                    name="evento"
-                    id="evento"
+                    name="eventoid"
+                    id="eventoid"
                     value={idSelected}
                     onChange={handleEventoChange}
                   >

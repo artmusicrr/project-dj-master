@@ -5,12 +5,12 @@ import {
   faLinkedin,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./styles.css"
-
 
 const Section: React.FC = () => {
   const [activeContentIndex, setActiveContentIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   const [contents, setContents] = useState([
     { id_text: 1, title: "", subTitle: "", text: "", anyText: "" },
@@ -18,7 +18,7 @@ const Section: React.FC = () => {
     { id_text: 3, title: "", subTitle: "", text: "", anyText: "" },
     { id_text: 4, title: "", subTitle: "", text: "", anyText: "" },
     { id_text: 5, title: "", subTitle: "", text: "", anyText: "" },
-  ]);
+  ])
 
   const imgUrls = [
     "/assets/img/100.jpg",
@@ -28,35 +28,43 @@ const Section: React.FC = () => {
     "/assets/img/104.jpg",
   ]
 
-  fetch("http://localhost:4000/title")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((data: any) => {
-      console.log("Data:", data)
-      const updatesContents = contents.map((content: any) => {
-        const item = data.find((item: { id_text: number }) => item.id_text === content.id_text)   
-          return item? { ...content, ...item }: content;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/title")
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
         }
-      )
-      setContents(updatesContents);
-    })
-    .catch((error) => {
-      console.error("Error:", error)
-      // Faça o tratamento de erro adequado
-    })
+        const data = await response.json()
+        console.log("Data = SECTION ==>:", data)
+        const updatesContents = contents.map((content) => {
+          const item = data.find(
+            (item: { id_text: number }) => item.id_text === content.id_text,
+          )
+          return item ? { ...content, ...item } : content
+        })
+        setContents(updatesContents)
+        setIsLoading(false) // Set loading to false after data is loaded
+      } catch (error) {
+        console.error("Error:", error)
+        setIsLoading(false) // Set loading to false even if there is an error
+      }
+    }
 
- 
+    fetchData()
+  }, []) // Empty dependency array to run only once when the component mounts
+
+  if (isLoading) {
+    return <div>Loading...</div> // Or any loading indicator
+  }
+
   const contentText = contents.map((content) => ({
     title: content.title,
     span: content.subTitle,
     text: <p>{content.text}</p>,
-  }));
+  }))
+  console.log("===> ", contentText)
 
-  // Função para lidar com o clique no botão de navegação
   const handleNavClick = (index: number) => {
     setActiveContentIndex(index)
     window.scrollTo(0, 0)

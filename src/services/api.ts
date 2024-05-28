@@ -4,7 +4,9 @@ export const updateText = async (query: any, id: any, content: any, ) => {
   console.log("Conteúdo:", content)
   console.log("Query:", query)
     
-      const response = await fetch(`http://localhost:4000/title/${query}/${id}`, {
+      //const response = await fetch(`http://localhost:4000/title/${query}/${id}`, {
+        
+      const response = await fetch(`https://master-back-deploy.onrender.com/${query}/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -17,7 +19,7 @@ export const updateText = async (query: any, id: any, content: any, ) => {
       }
   
       const data = await response.json();
-      console.log("Data:", data)
+      console.log("Data API==>:", data)
       return data;
     
   };
