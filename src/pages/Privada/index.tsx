@@ -9,9 +9,9 @@ export const Privada = () => {
   const [idSelected, setidSelected] = useState("")
   const [querySelected, setQuerySelected] = useState("")
 
-  console.log("ID ==>:", idSelected)
+  //console.log("ID ==>:", idSelected)
 
-  const auth = useAuth()
+  //const auth = useAuth()
 
   useEffect(() => {
     // Set valores padrão para idSelected e querySelected com base nas primeiras opções
