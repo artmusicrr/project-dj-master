@@ -1,7 +1,7 @@
 export const updateText = async (query: any, id: any, content: any) => {
-  //console.log("ID:", id)
-  //console.log("Conteúdo:", content)
-  //console.log("Query:", query)
+  console.log("ID:", id)
+  console.log("Conteúdo:", content)
+  console.log("Query:", query)
 
   //const response = await fetch(`http://localhost:4000/title/${query}/${id}`, {
 
@@ -21,6 +21,6 @@ export const updateText = async (query: any, id: any, content: any) => {
   }
 
   const data = await response.json()
-  //console.log("Data API==>:", data)
+  console.log("Data API==>:", data)
   return data
 }
