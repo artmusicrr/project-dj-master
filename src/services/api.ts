@@ -6,7 +6,7 @@ export const updateText = async (query: any, id: any, content: any) => {
   //const response = await fetch(`http://localhost:4000/title/${query}/${id}`, {
 
   const response = await fetch(
-    `https://master-back-deploy.onrender.com/${query}/${id}`,
+    `https://master-back-deploy.onrender.com/title/${query}/${id}`,
     {
       method: "PATCH",
       headers: {
