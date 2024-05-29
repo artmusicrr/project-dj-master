@@ -31,7 +31,9 @@ const Section: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/title")
+        const response = await fetch(
+          "https://master-back-deploy.onrender.com/title",
+        )
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
