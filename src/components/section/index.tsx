@@ -13,11 +13,11 @@ const Section: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const [contents, setContents] = useState([
-    { id_text: 1, title: "", subTitle: "", text: "", anyText: "" },
-    { id_text: 2, title: "", subTitle: "", text: "", anyText: "" },
-    { id_text: 3, title: "", subTitle: "", text: "", anyText: "" },
-    { id_text: 4, title: "", subTitle: "", text: "", anyText: "" },
-    { id_text: 5, title: "", subTitle: "", text: "", anyText: "" },
+    { id_text: 1, title: "", sub_title: "", text: "", any_text: "" },
+    { id_text: 2, title: "", sub_title: "", text: "", any_text: "" },
+    { id_text: 3, title: "", sub_title: "", text: "", any_text: "" },
+    { id_text: 4, title: "", sub_title: "", text: "", any_text: "" },
+    { id_text: 5, title: "", sub_title: "", text: "", any_text: "" },
   ])
 
   const imgUrls = [
@@ -38,7 +38,6 @@ const Section: React.FC = () => {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
         const data = await response.json()
-        console.log("Data = SECTION ==>:", data)
         const updatesContents = contents.map((content) => {
           const item = data.find(
             (item: { id_text: number }) => item.id_text === content.id_text,
@@ -62,17 +61,14 @@ const Section: React.FC = () => {
 
   const contentText = contents.map((content) => ({
     title: content.title,
-    span: content.subTitle,
+    span: content.sub_title,
     text: <p>{content.text}</p>,
   }))
-  console.log("===> ", contentText)
 
   const handleNavClick = (index: number) => {
     setActiveContentIndex(index)
     window.scrollTo(0, 0)
   }
-
-  console.log("===> ", activeContentIndex)
 
   return (
     <section className="home">
