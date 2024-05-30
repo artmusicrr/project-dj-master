@@ -9,8 +9,6 @@ export const Privada = () => {
   const [idSelected, setidSelected] = useState("")
   const [querySelected, setQuerySelected] = useState("")
 
-  console.log("ID ==>:", idSelected)
-
   const auth = useAuth()
 
   useEffect(() => {
@@ -38,7 +36,6 @@ export const Privada = () => {
   const handleSave = async () => {
     try {
       const data = await updateText(querySelected, idSelected, textAreaValue)
-      console.log("Success:", data)
       alert("Conteúdo salvo com sucesso!")
     } catch (error: unknown) {
       if (error instanceof Error) {
