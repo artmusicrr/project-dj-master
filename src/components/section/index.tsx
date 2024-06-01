@@ -7,18 +7,73 @@ import {
 } from "@fortawesome/free-brands-svg-icons"
 import React, { useEffect, useState } from "react"
 import "./styles.css"
+import CustomTitle from "../custonTitle"
+import { colors } from "@mui/material"
+import { ICustonTitle } from "../../types/typesCustnTitle"
 
-const Section: React.FC = () => {
+const Section: React.FC<ICustonTitle> = () => {
   const [activeContentIndex, setActiveContentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
   const [contents, setContents] = useState([
-    { id_text: 1, title: "", sub_title: "", text: "", any_text: "" },
-    { id_text: 2, title: "", sub_title: "", text: "", any_text: "" },
-    { id_text: 3, title: "", sub_title: "", text: "", any_text: "" },
-    { id_text: 4, title: "", sub_title: "", text: "", any_text: "" },
-    { id_text: 5, title: "", sub_title: "", text: "", any_text: "" },
+    {
+      id_text: 1,
+      title: "",
+      sub_title: "",
+      text: "",
+      any_text: "",
+      color_title: "",
+      color_text: "",
+      color_sub_title: "",
+      color_any_text: "",
+    },
+    {
+      id_text: 2,
+      title: "",
+      sub_title: "",
+      text: "",
+      any_text: "",
+      color_title: "",
+      color_text: "",
+      color_sub_title: "",
+      color_any_text: "",
+    },
+    {
+      id_text: 3,
+      title: "",
+      sub_title: "",
+      text: "",
+      any_text: "",
+      color_title: "",
+      color_text: "",
+      color_sub_title: "",
+      color_any_text: "",
+    },
+    {
+      id_text: 4,
+      title: "",
+      sub_title: "",
+      text: "",
+      any_text: "",
+      color_title: "",
+      color_text: "",
+      color_sub_title: "",
+      color_any_text: "",
+    },
+    {
+      id_text: 5,
+      title: "",
+      sub_title: "",
+      text: "",
+      any_text: "",
+      color_title: "",
+      color_text: "",
+      color_sub_title: "",
+      color_any_text: "",
+    },
   ])
+
+  console.log("contents ==>", contents)
 
   const imgUrls = [
     "/assets/img/100.jpg",
@@ -31,9 +86,7 @@ const Section: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://master-back-deploy.onrender.com/title",
-        )
+        const response = await fetch("http://localhost:4000/title")
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
@@ -63,6 +116,10 @@ const Section: React.FC = () => {
     title: content.title,
     span: content.sub_title,
     text: <p>{content.text}</p>,
+    color_title: content.color_title,
+    color_text: content.color_text,
+    color_sub_title: content.color_sub_title,
+    color_any_text: content.color_any_text,
   }))
 
   const handleNavClick = (index: number) => {
@@ -87,9 +144,18 @@ const Section: React.FC = () => {
           key={index}
           className={`content ${index === activeContentIndex ? "active" : ""}`}
         >
-          <h1>{content_text.title}</h1>
-          <span>{content_text.span}</span>
-          <span className="line">{content_text.text}</span>
+          <CustomTitle color={content_text.color_title}>
+            {content_text.title}
+          </CustomTitle>
+
+          <span style={{ color: content_text.color_sub_title }}>
+            {content_text.span}
+          </span>
+
+          <span className="line" style={{ color: content_text.color_text }}>
+            {content_text.text}
+          </span>
+
           {/* <a href="#"> Read More</a> */}
         </div>
       ))}

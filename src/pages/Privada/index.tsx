@@ -3,11 +3,15 @@ import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import "./styles.css"
 import { HeaderProtected } from "../../components/headerProtected/index"
 import { updateText } from "../../services/api" // Atualize o caminho conforme necessário
+import CustomColorPicker from "../../components/colorPicker"
 
 export const Privada = () => {
   const [textAreaValue, setTextAreaValue] = useState("")
   const [idSelected, setidSelected] = useState("")
   const [querySelected, setQuerySelected] = useState("")
+  const [color, setColor] = useState<string>("#1677ff")
+
+  //console.log("color ==>", color)
 
   const auth = useAuth()
 
@@ -32,10 +36,39 @@ export const Privada = () => {
   ) => {
     setTextAreaValue(event.target.value)
   }
-
+  //console.log(">>>>>>>>>", color)
   const handleSave = async () => {
     try {
-      const data = await updateText(querySelected, idSelected, textAreaValue)
+      let updateData = {}
+
+      switch (querySelected) {
+        case "update-title":
+          updateData = { title: textAreaValue, color_title: color }
+          break
+        case "update-sub-title":
+          updateData = { sub_title: textAreaValue, color_title: color }
+          break
+        case "update-text":
+          updateData = { text: textAreaValue, color_title: color }
+          break
+        case "update-any-text":
+          updateData = { any_text: textAreaValue, color_title: color }
+          break
+        case "update-color":
+          updateData = { color_title: color }
+          break
+        default:
+          break
+      }
+
+      console.log("Salvando dados:", { querySelected, idSelected, updateData })
+
+      const data = await updateText(
+        querySelected,
+        idSelected,
+        textAreaValue,
+        color,
+      )
       alert("Conteúdo salvo com sucesso!")
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -58,6 +91,7 @@ export const Privada = () => {
     "update-sub-title": "Sub-titulo",
     "update-text": "Texto",
     "update-any-text": "Outros textos",
+    //"update-color": "Cor do texto",
   }
 
   return (
@@ -71,6 +105,7 @@ export const Privada = () => {
                 value={textAreaValue}
                 onChange={handleTextAreaChange}
                 placeholder="Digite seu texto aqui..."
+                style={{ color: color }}
               ></textarea>
 
               <div className="select-container">
@@ -113,6 +148,17 @@ export const Privada = () => {
                 </div>
               </div>
               <button onClick={handleSave}>Salvar</button>
+              {/* ///////////////////////////////////////////// */}
+              <div>
+                <label htmlFor="">SELECIONE A COR DO TEXTO</label>
+
+                <CustomColorPicker
+                  defaultValue="#1677ff"
+                  showText={(color) => <span>Custom Text ({color})</span>}
+                  onChange={(newColor) => setColor(newColor)}
+                />
+              </div>
+              {/* /////////////////////////////////////////////// */}
             </div>
           </div>
           <div className="body-right"></div>
