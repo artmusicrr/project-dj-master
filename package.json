@@ -24,6 +24,7 @@
     "axios": "^1.5.1",
     "primereact": "^10.6.5",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
@@ -56,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-color": "^3.0.12",
     "@types/react-router-dom": "^5.3.3",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
