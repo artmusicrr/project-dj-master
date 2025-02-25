@@ -1,26 +1,47 @@
-export const updateText = async (query: any, id: any, text: any, color: any) => {
-  
-  //const response = await fetch(`http://localhost:4000/title/${query}/${id}`, {
-    
-    console.log("==== color ==>", query, id, text, color)
-    const response = await fetch(
-    `http://localhost:4000/title/${query}/${id}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({query: query, id: id, text: text, color: color }),
-    },
-  )
+import { SlideData } from "../types/typesAdm"
+import axios from "axios"
 
-  //console.log("==== color ==>", query, id, text, color)
-console.log("response ==>", response)
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+const api = axios.create({
+  baseURL: "http://localhost:4000/title",
+})
+
+//
+
+export const updateText = async (
+  query: string,
+  id_text: string,
+  updateData: SlideData,
+) => {
+  try {
+    const response = await api.patch(`/${query}/${id_text}`, updateData)
+    return response.data
+  } catch (error) {
+    console.error("Erro ao atualizar texto:", error)
+    throw error
   }
-
-  const data = await response.json()
-  console.log("Data API==>:", data)
-  return data
 }
+
+export const uploadImage = async (
+  formData: FormData,
+  idSelected: string,
+): Promise<string> => {
+  try {
+    const response = await axios.post(
+      `http://localhost:4000/slides/upload/${idSelected}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    )
+    return response.data.url // Assumindo que o backend retorna um objeto com a URL da imagem
+  } catch (error: any) {
+    console.error("Erro ao fazer upload da imagem:", error)
+    throw new Error(
+      error.response?.data?.message || "Erro ao fazer upload da imagem",
+    )
+  }
+}
+
+export default api
