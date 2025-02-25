@@ -1,13 +1,13 @@
 import React from "react"
-import * as Styled from "./styles"
 import Header from "../../components/header"
 import Section from "../../components/section"
+import * as Styled from "./styles"
 
 export const Home = () => {
   return (
     <Styled.Container>
       <Header />
-      <Section />
+      <Section slides={[]} fontSize={16} color="black" />
     </Styled.Container>
   )
 }

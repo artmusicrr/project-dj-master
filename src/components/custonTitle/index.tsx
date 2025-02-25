@@ -3,10 +3,23 @@ import { ICustonTitle } from "../../types/typesCustnTitle"
 import { Title } from "./styled"
 import CustomColorPicker from "./../colorPicker/index"
 
-const CustomTitle: React.FC<ICustonTitle> = ({ color, children }) => {
+const CustomTitle: React.FC<ICustonTitle> = ({
+  color,
+  fontSize,
+  fontWeight,
+  fontFamily,
+  children,
+}) => {
   return (
     <>
-      <Title style={{ color: color }}>{children}</Title>
+      <Title
+        color={color}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        fontFamily={fontFamily}
+      >
+        {children}
+      </Title>
     </>
   )
 }

@@ -1,27 +1,117 @@
 import React, { useEffect, useState } from "react"
-import { useAuth } from "../../contexts/AuthProvider/useAuth"
+//import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import "./styles.css"
 import { HeaderProtected } from "../../components/headerProtected/index"
-import { updateText } from "../../services/api" // Atualize o caminho conforme necessário
+import { updateText, uploadImage } from "../../services/api"
 import CustomColorPicker from "../../components/colorPicker"
+import ImageSelector from "../../components/selects/ImageSelector"
+import TextSelector from "../../components/selects/TextSelector"
+import CustomTextArea from "../../components/CustomTextArea"
+import useSlideData from "../../hooks/useSlideData"
+import {
+  fontFamilies,
+  textSelected,
+  imageSelected,
+} from "../../utils/sliderrFormat"
+import { Slide } from "../../types/typesAdm"
 
-export const Privada = () => {
+export const Privada: React.FC = () => {
   const [textAreaValue, setTextAreaValue] = useState("")
   const [idSelected, setidSelected] = useState("")
   const [querySelected, setQuerySelected] = useState("")
   const [color, setColor] = useState<string>("#1677ff")
-
-  //console.log("color ==>", color)
-
-  const auth = useAuth()
+  const [fontSize, setFontSize] = useState<number>(16)
+  const [fontWeight, setFontWeight] = useState<string>("normal")
+  const [fontFamily, setFontFamily] = useState<string>("Arial")
+  const slideData = useSlideData()
+  const [newImage, setNewImage] = useState<File | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [slides, setSlides] = useState<Slide[]>([])
 
   useEffect(() => {
-    // Set valores padrão para idSelected e querySelected com base nas primeiras opções
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/slides")
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        setSlides(data)
+        setIsLoading(false)
+      } catch (error) {
+        console.error("Error:", error)
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  console.log("slides ====> ", slides)
+
+  useEffect(() => {
     const firstImageId = Object.keys(imageSelected)[0]
     const firstTextQuery = Object.keys(textSelected)[0]
-    setidSelected(firstImageId)
-    setQuerySelected(firstTextQuery)
-  }, []) // Executar apenas uma vez na montagem do componente
+    if (firstImageId && firstTextQuery) {
+      setidSelected(firstImageId)
+      setQuerySelected(firstTextQuery)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (idSelected && querySelected) {
+      const selectedSlide = slideData[idSelected]
+      if (selectedSlide) {
+        switch (querySelected) {
+          case "update-title":
+            console.log("selectedSlide.title:", selectedSlide.title)
+            setTextAreaValue(
+              selectedSlide.title ||
+                (slides.length > 0 ? slides[0].title : "") ||
+                "",
+            )
+            setColor(
+              selectedSlide.color_title ||
+                (slides.length > 0 ? slides[0].color_title : "#000000") ||
+                "#000000",
+            )
+            setFontSize(
+              Number(
+                selectedSlide.font_size_title ||
+                  (slides.length > 0 ? slides[0].font_size_title : 16),
+              ) || 16,
+            )
+            setFontWeight(
+              selectedSlide.font_weight_title ||
+                (slides.length > 0 ? slides[0].font_weight_title : "normal") ||
+                "normal",
+            )
+            setFontFamily(
+              selectedSlide.font_family_title ||
+                (slides.length > 0 ? slides[0].font_family_title : "Arial") ||
+                "Arial",
+            )
+            break
+          case "update-sub-title":
+            setTextAreaValue(selectedSlide.sub_title || "")
+            setColor(selectedSlide.color_sub_title || "#000000")
+            break
+          case "update-text":
+            setTextAreaValue(selectedSlide.text || "")
+            setColor(selectedSlide.color_text || "#000000")
+            break
+          case "update-any-text":
+            setTextAreaValue(selectedSlide.any_text || "")
+            setColor(selectedSlide.color_any_text || "#000000")
+            break
+          default:
+            setTextAreaValue("")
+            setColor("#000000")
+            break
+        }
+      }
+    }
+  }, [idSelected, querySelected, slideData, slides]) // Adicione slides como dependência
 
   const handleEventoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setidSelected(e.target.value)
@@ -31,31 +121,73 @@ export const Privada = () => {
     setQuerySelected(e.target.value)
   }
 
-  const handleTextAreaChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setTextAreaValue(event.target.value)
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextAreaValue(e.target.value)
   }
-  //console.log(">>>>>>>>>", color)
+
+  const handleColorChange = (newColor: string) => {
+    setColor(newColor)
+  }
+
+  const handleFontSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFontSize(Number(e.target.value))
+  }
+
+  const handleFontWeightChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFontWeight(e.target.value)
+  }
+
+  const handleFontFamilyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFontFamily(e.target.value)
+  }
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setNewImage(e.target.files[0])
+    }
+  }
+
   const handleSave = async () => {
     try {
-      let updateData = {}
+      if (!idSelected || !querySelected) {
+        alert("Por favor, selecione um slide e um campo de texto.")
+        return
+      }
+
+      let updateData: { [key: string]: any } = {}
+
+      if (newImage) {
+        const formData = new FormData()
+        formData.append("image", newImage)
+        try {
+          const imageUrl = await uploadImage(formData, idSelected) // Chame a função de uploadImage
+          updateData.image_url = imageUrl // Adicione a URL da imagem aos dados de atualização
+          setNewImage(null) // Limpe o estado da imagem após o upload
+        } catch (uploadError: any) {
+          console.error("Erro ao fazer upload da imagem:", uploadError.message)
+          alert(`Falha ao salvar a imagem: ${uploadError.message}`)
+          return // Não continue se o upload da imagem falhar
+        }
+      }
 
       switch (querySelected) {
         case "update-title":
-          updateData = { title: textAreaValue, color_title: color }
+          updateData = {
+            title: textAreaValue,
+            color_title: color,
+            font_size_title: fontSize, // Adicione aqui
+            font_weight_title: fontWeight, // Adicione aqui
+            font_family_title: fontFamily,
+          }
           break
         case "update-sub-title":
-          updateData = { sub_title: textAreaValue, color_title: color }
+          updateData = { sub_title: textAreaValue, color_sub_title: color }
           break
         case "update-text":
-          updateData = { text: textAreaValue, color_title: color }
+          updateData = { text: textAreaValue, color_text: color }
           break
         case "update-any-text":
-          updateData = { any_text: textAreaValue, color_title: color }
-          break
-        case "update-color":
-          updateData = { color_title: color }
+          updateData = { any_text: textAreaValue, color_any_text: color }
           break
         default:
           break
@@ -63,12 +195,9 @@ export const Privada = () => {
 
       console.log("Salvando dados:", { querySelected, idSelected, updateData })
 
-      const data = await updateText(
-        querySelected,
-        idSelected,
-        textAreaValue,
-        color,
-      )
+      // Envia os dados separadamente para a API
+      await updateText(querySelected, idSelected, updateData)
+
       alert("Conteúdo salvo com sucesso!")
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -78,96 +207,94 @@ export const Privada = () => {
     }
   }
 
-  const imageSelected = {
-    1: "Texto do slide 1",
-    2: "Texto do slide 2",
-    3: "Texto do slide 3",
-    4: "Texto do slide 4",
-    5: "Texto do slide 5",
-  }
-
-  const textSelected = {
-    "update-title": "Titulo",
-    "update-sub-title": "Sub-titulo",
-    "update-text": "Texto",
-    "update-any-text": "Outros textos",
-    //"update-color": "Cor do texto",
-  }
-
   return (
     <div className="container">
       <div className="content">
         <HeaderProtected />
         <div className="body-container">
           <div className="body-left">
+            {" "}
+            {/* Painel de Controle dos Slides */}
             <div className="textarea-container">
-              <textarea
+              <CustomTextArea
                 value={textAreaValue}
                 onChange={handleTextAreaChange}
-                placeholder="Digite seu texto aqui..."
-                style={{ color: color }}
-              ></textarea>
+                color={color}
+                fontSize={`${fontSize}px`}
+                fontWeight={fontWeight}
+                fontFamily={fontFamily}
+              />
 
               <div className="select-container">
-                <div className="select-label">
-                  <label className="texto-image">
-                    Selecione em qual slide de imagem da home voce deseja
-                    alterar o texto:
-                  </label>
-                  <select
-                    className="select"
-                    name="eventoid"
-                    id="eventoid"
-                    value={idSelected}
-                    onChange={handleEventoChange}
-                  >
-                    {Object.entries(imageSelected).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="select-label">
-                  <label className="texto-image">
-                    Selecione qual é o campo de texto que deseja alterar:
-                  </label>
-                  <select
-                    className="select"
-                    name="textEvent"
-                    id="textEvent"
-                    value={querySelected}
-                    onChange={handleQueryChange}
-                  >
-                    {Object.entries(textSelected).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <button onClick={handleSave}>Salvar</button>
-              {/* ///////////////////////////////////////////// */}
-              <div>
-                <label htmlFor="">SELECIONE A COR DO TEXTO</label>
-
-                <CustomColorPicker
-                  defaultValue="#1677ff"
-                  showText={(color) => <span>Custom Text ({color})</span>}
-                  onChange={(newColor) => setColor(newColor)}
+                <ImageSelector
+                  options={imageSelected}
+                  value={idSelected}
+                  onChange={handleEventoChange}
+                />
+                <TextSelector
+                  options={textSelected}
+                  value={querySelected}
+                  onChange={handleQueryChange}
                 />
               </div>
-              {/* /////////////////////////////////////////////// */}
+
+              {/* Campos para font_size, font_weight e font_family */}
+              <div>
+                <label>Tamanho da Fonte:</label>
+                <input
+                  type="number"
+                  value={Number(fontSize)}
+                  onChange={handleFontSizeChange}
+                />
+              </div>
+
+              <div>
+                <label>Peso da Fonte:</label>
+                <select value={fontWeight} onChange={handleFontWeightChange}>
+                  <option value="normal">Normal</option>
+                  <option value="bold">Negrito</option>
+                  <option value="lighter">Mais leve</option>
+                  <option value="bolder">Mais forte</option>
+                  {/* Adicione mais opções conforme necessário */}
+                </select>
+              </div>
+
+              <div>
+                <label>Família da Fonte:</label>
+                <select value={fontFamily} onChange={handleFontFamilyChange}>
+                  {fontFamilies.map((font) => (
+                    <option key={font} value={font}>
+                      {font}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+
+              <button onClick={handleSave}>Salvar</button>
+
+              <div>
+                <label htmlFor="">SELECIONE A COR DO TEXTO</label>
+                <CustomColorPicker
+                  defaultValue={color}
+                  onChange={handleColorChange}
+                  fontSize={"16"} // Add the required fontSize property
+                />
+              </div>
             </div>
           </div>
-          <div className="body-right"></div>
+          <div className="body-right">
+            {" "}
+            {/* Painel de Administração (Futuro) */}
+            {/* Conteúdo futuro do painel de administração */}
+          </div>
         </div>
-
-        <div className="footer">Footer</div>
       </div>
     </div>
   )
 }
-
-export default Privada

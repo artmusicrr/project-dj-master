@@ -5,159 +5,113 @@ import {
   faLinkedin,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import "./styles.css"
 import CustomTitle from "../custonTitle"
-import { colors } from "@mui/material"
-import { ICustonTitle } from "../../types/typesCustnTitle"
+//import { colors } from "@mui/material"
+import { Slide } from "../../types/typesAdm"
+import { ICustonTitle } from "../../types/typesAdm"
 
 const Section: React.FC<ICustonTitle> = () => {
+  const sectionRef = useRef<HTMLElement>(null)
   const [activeContentIndex, setActiveContentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [slides, setSlides] = useState<Slide[]>([])
 
-  const [contents, setContents] = useState([
-    {
-      id_text: 1,
-      title: "",
-      sub_title: "",
-      text: "",
-      any_text: "",
-      color_title: "",
-      color_text: "",
-      color_sub_title: "",
-      color_any_text: "",
-    },
-    {
-      id_text: 2,
-      title: "",
-      sub_title: "",
-      text: "",
-      any_text: "",
-      color_title: "",
-      color_text: "",
-      color_sub_title: "",
-      color_any_text: "",
-    },
-    {
-      id_text: 3,
-      title: "",
-      sub_title: "",
-      text: "",
-      any_text: "",
-      color_title: "",
-      color_text: "",
-      color_sub_title: "",
-      color_any_text: "",
-    },
-    {
-      id_text: 4,
-      title: "",
-      sub_title: "",
-      text: "",
-      any_text: "",
-      color_title: "",
-      color_text: "",
-      color_sub_title: "",
-      color_any_text: "",
-    },
-    {
-      id_text: 5,
-      title: "",
-      sub_title: "",
-      text: "",
-      any_text: "",
-      color_title: "",
-      color_text: "",
-      color_sub_title: "",
-      color_any_text: "",
-    },
-  ])
-
-  console.log("contents ==>", contents)
-
-  const imgUrls = [
-    "/assets/img/100.jpg",
-    "/assets/img/101.webp",
-    "/assets/img/102.jpg",
-    "/assets/img/103.jpg",
-    "/assets/img/104.jpg",
-  ]
+  //console.log("slides ====> ", slides)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/title")
+        const response = await fetch("http://localhost:4000/slides")
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
         const data = await response.json()
-        const updatesContents = contents.map((content) => {
-          const item = data.find(
-            (item: { id_text: number }) => item.id_text === content.id_text,
-          )
-          return item ? { ...content, ...item } : content
-        })
-        setContents(updatesContents)
-        setIsLoading(false) // Set loading to false after data is loaded
+        setSlides(data)
+        setIsLoading(false)
       } catch (error) {
         console.error("Error:", error)
-        setIsLoading(false) // Set loading to false even if there is an error
+        setIsLoading(false)
       }
     }
 
     fetchData()
-  }, []) // Empty dependency array to run only once when the component mounts
+  }, [])
+
+  useEffect(() => {
+    const intervalId: NodeJS.Timeout = setInterval(() => {
+      setActiveContentIndex((prevIndex) =>
+        prevIndex === slides.length - 1 ? 0 : prevIndex + 1,
+      )
+    }, 1000000)
+
+    return () => clearInterval(intervalId)
+  }, [slides.length])
+
+  useEffect(() => {
+    // Atualiza a variável CSS quando o slide ativo mudar
+    if (sectionRef.current && slides[activeContentIndex]) {
+      sectionRef.current.style.setProperty(
+        "--title-font-size",
+        slides[activeContentIndex].font_size_title?.toString() + "px",
+      )
+      sectionRef.current.style.setProperty(
+        "--title-font-weight",
+        slides[activeContentIndex].font_weight_title?.toString() || "",
+      )
+      sectionRef.current.style.setProperty(
+        "--title-font-family",
+        slides[activeContentIndex].font_family_title || "",
+      )
+    }
+  }, [activeContentIndex, slides])
 
   if (isLoading) {
-    return <div>Loading...</div> // Or any loading indicator
-  }
-
-  const contentText = contents.map((content) => ({
-    title: content.title,
-    span: content.sub_title,
-    text: <p>{content.text}</p>,
-    color_title: content.color_title,
-    color_text: content.color_text,
-    color_sub_title: content.color_sub_title,
-    color_any_text: content.color_any_text,
-  }))
-
-  const handleNavClick = (index: number) => {
-    setActiveContentIndex(index)
-    window.scrollTo(0, 0)
+    return <div>Loading...</div>
   }
 
   return (
-    <section className="home">
-      {imgUrls.map((url, index) => (
-        <img
-          key={index}
-          src={url}
-          className={`video-slide ${
-            index === activeContentIndex ? "active" : ""
-          }`}
-        />
-      ))}
-
-      {contentText.map((content_text, index) => (
-        <div
-          key={index}
-          className={`content ${index === activeContentIndex ? "active" : ""}`}
-        >
-          <CustomTitle color={content_text.color_title}>
-            {content_text.title}
-          </CustomTitle>
-
-          <span style={{ color: content_text.color_sub_title }}>
-            {content_text.span}
-          </span>
-
-          <span className="line" style={{ color: content_text.color_text }}>
-            {content_text.text}
-          </span>
-
-          {/* <a href="#"> Read More</a> */}
-        </div>
+    <section className="home" ref={sectionRef}>
+      {slides.map((slide, index) => (
+        <React.Fragment key={slide.id}>
+          <img
+            src={`http://localhost:4000${slide.image_url}`}
+            alt={`Slide ${slide.id}`}
+            className={`video-slide ${
+              index === activeContentIndex ? "active" : ""
+            }`}
+          />
+          <div
+            className={`content ${index === activeContentIndex ? "active" : ""}`}
+          >
+            <CustomTitle
+              color={slide.color_title}
+              fontSize={slide.font_size_title?.toString()}
+              fontWeight={slide.font_weight_title}
+              fontFamily={slide.font_family_title}
+            >
+              {slide.title}
+            </CustomTitle>
+            <span
+              style={{
+                color: slide.color_sub_title,
+                fontSize: slide.font_size_sub_title,
+              }}
+            >
+              {slide.sub_title}
+            </span>
+            <span
+              className="line"
+              style={{
+                color: slide.color_text,
+                fontSize: slide.font_size_text,
+              }}
+            >
+              {slide.text}
+            </span>
+          </div>
+        </React.Fragment>
       ))}
 
       <div className="media-icons">
@@ -193,14 +147,11 @@ const Section: React.FC<ICustonTitle> = () => {
         </a>
       </div>
       <div className="slider-navigation">
-        {/* Renderiza os botões de navegação */}
-        {Array.from({ length: 5 }).map((_, index) => (
+        {slides.map((slide, index) => (
           <div
-            key={index}
-            className={`nav-btn ${
-              index === activeContentIndex ? "active" : ""
-            }`}
-            onClick={() => handleNavClick(index)}
+            key={slide.id}
+            className={`nav-btn ${index === activeContentIndex ? "active" : ""}`}
+            onClick={() => setActiveContentIndex(index)}
           ></div>
         ))}
       </div>
