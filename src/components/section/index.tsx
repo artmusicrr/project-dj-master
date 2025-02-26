@@ -8,36 +8,31 @@ import {
 import React, { useEffect, useState, useRef } from "react"
 import "./styles.css"
 import CustomTitle from "../custonTitle"
-//import { colors } from "@mui/material"
-import { Slide } from "../../types/typesAdm"
+import { Slide } from "../../store/slides/types"
 import { ICustonTitle } from "../../types/typesAdm"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../store"
+import { fetchSlidesRequest } from "../../store/slides/actions"
 
 const Section: React.FC<ICustonTitle> = () => {
   const sectionRef = useRef<HTMLElement>(null)
   const [activeContentIndex, setActiveContentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [slides, setSlides] = useState<Slide[]>([])
+  const dispatch = useDispatch()
 
-  //console.log("slides ====> ", slides)
+  const slidesRedux = useSelector((state: RootState) => state.slides.slides) // Ajuste aqui
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/slides")
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        const data = await response.json()
-        setSlides(data)
-        setIsLoading(false)
-      } catch (error) {
-        console.error("Error:", error)
-        setIsLoading(false)
-      }
-    }
+    dispatch(fetchSlidesRequest())
+  }, [dispatch])
 
-    fetchData()
-  }, [])
+  useEffect(() => {
+    if (slidesRedux) {
+      setSlides(slidesRedux)
+      setIsLoading(false) // Mova o setIsLoading para cá
+    }
+  }, [slidesRedux])
 
   useEffect(() => {
     const intervalId: NodeJS.Timeout = setInterval(() => {
@@ -50,7 +45,6 @@ const Section: React.FC<ICustonTitle> = () => {
   }, [slides.length])
 
   useEffect(() => {
-    // Atualiza a variável CSS quando o slide ativo mudar
     if (sectionRef.current && slides[activeContentIndex]) {
       sectionRef.current.style.setProperty(
         "--title-font-size",

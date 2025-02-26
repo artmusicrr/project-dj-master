@@ -1,0 +1,34 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Ajustar a altura do header */
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+  .header-title {
+    font-size: 24px;
+    margin: 0;
+  }
+  .header-user-name {
+    font-size: 18px;
+    margin: 0;
+    font-weight: lighter;
+  }
+  .header-btn {
+    display: flex;
+    gap: 10px;
+    color: white; /* Definir a cor do ícone como branco */
+}
+
+.icon{
+    color: white;
+    transition: 0.3s ease;
+}
+
+.icon:hover {
+    opacity: 0.9;
+    color: lightblue;
+}

@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
+import "./styles.css"
 
 export const HeaderProtected = () => {
   const auth = useAuth()
@@ -15,8 +16,8 @@ export const HeaderProtected = () => {
   return (
     <div className="header">
       <div className="header-text">
-        <h2>Bem-vindo ao painel de administrador</h2>
-        <h2>{auth.name}</h2>
+        <h2 className="header-title">Bem-vindo ao painel de administrador !</h2>
+        <h2 className="header-user-name">{auth.name}</h2>
       </div>
       <div className="header-btn">
         <FontAwesomeIcon
@@ -28,5 +29,3 @@ export const HeaderProtected = () => {
     </div>
   )
 }
-
-//export default HeaderProtected
