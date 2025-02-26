@@ -1,4 +1,6 @@
 import React from "react"
+import { Provider } from "react-redux"
+import store from "./store"
 import { BrowserRouter } from "react-router-dom"
 import ReactDOM from "react-dom/client"
 import "./index.css"
@@ -12,7 +14,9 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </BrowserRouter>
     </AuthProvider>
   </React.StrictMode>,

@@ -11,6 +11,15 @@ export interface SlideData {
     font_size_title?: string
     font_weight_title?: string
     font_family_title?: string
+    font_size_sub_title?: string
+    font_weight_sub_title?: string
+    font_family_sub_title?: string
+    font_size_text?: string
+    font_weight_text?: string
+    font_family_text?: string
+    font_size_any_text?: string
+    font_weight_any_text?: string
+    font_family_any_text?: string
   }
 }
 
@@ -24,12 +33,19 @@ export interface Slide {
   color_text: string
   color_sub_title: string
   color_any_text: string
-  font_size_sub_title: number
-  font_size_text: number
   image_url: string
   font_size_title?: string
   font_weight_title?: string
   font_family_title?: string
+  font_size_sub_title?: string
+  font_weight_sub_title?: string
+  font_family_sub_title?: string
+  font_size_text?: string
+  font_weight_text?: string
+  font_family_text?: string
+  font_size_any_text?: string
+  font_weight_any_text?: string
+  font_family_any_text?: string
 }
 
 export interface ICustonTitle {
