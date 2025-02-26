@@ -17,7 +17,7 @@ const fetchSlidesApi = async () => {
 }
 
 // Worker Saga para buscar slides
-function* fetchSlidesSaga(): Generator {
+function* fetchSlidesSaga(): Generator<any, void, Slide[]> {
   try {
     const slides: Slide[] = yield call(fetchSlidesApi)
     yield put(fetchSlidesSuccess(slides))

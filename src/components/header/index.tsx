@@ -61,10 +61,16 @@ const Header: React.FC = () => {
         onClick={toggleMenu}
       >
         <div className="nav-items">
-          <a href="#">Home</a>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            navigate('/');
+          }}>Home</a>
           <a href="#">Serviços</a>
           <a href="#">Empresa</a>
-          <a href="#">Galeria</a>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            navigate('/gallery');
+          }}>Galeria</a>
           <a
             href="#"
             onClick={(e) => {

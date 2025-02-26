@@ -5,7 +5,7 @@ import { Privada } from "./pages/Privada"
 import { ProtectedLayout } from "./components/ProtectedLayout"
 import { Login } from "./pages/Login"
 import * as Styled from "./styles"
-import Form from "./components/form"
+import Galery from "./pages/Gallery"
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/gallery" element={<Galery />} />
         <Route
           path="/privada"
           element={

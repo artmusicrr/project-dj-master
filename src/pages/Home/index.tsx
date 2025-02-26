@@ -1,6 +1,7 @@
 import React from "react"
 import Header from "../../components/header"
 import Section from "../../components/section"
+// import Gallery from "../Gallery"
 import * as Styled from "./styles"
 
 export const Home = () => {
@@ -8,6 +9,7 @@ export const Home = () => {
     <Styled.Container>
       <Header />
       <Section slides={[]} fontSize={16} color="black" />
+      {/* <Gallery /> */}
     </Styled.Container>
   )
 }

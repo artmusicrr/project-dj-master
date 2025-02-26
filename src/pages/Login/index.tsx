@@ -2,8 +2,8 @@ import React from "react"
 import "./login.css"
 import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import { useNavigate } from "react-router-dom"
-import { Col, Row, Form, Input, Button, message } from "antd"
-import { HomeOutlined } from "@ant-design/icons"
+import { Col, Row, Form, Input, Button, message, Card } from "antd"
+import { HomeOutlined, UserOutlined, LockOutlined } from "@ant-design/icons"
 
 export const Login = () => {
   const auth = useAuth()
@@ -19,59 +19,90 @@ export const Login = () => {
   }
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "200px",
-          marginTop: "20px",
-          marginLeft: "20px",
-        }}
-      >
+    <div className="login-container">
+      <div className="home-button">
         <HomeOutlined
           onClick={() => navigate("/")}
           style={{
             fontSize: "20px",
-            marginRight: "10px",
             color: "#1890ff",
             cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         />
-        <h3>Home</h3>
       </div>
       <Row
         justify="center"
         align="middle"
         style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          minHeight: "100vh",
+          padding: "20px",
         }}
       >
-        <Col span={12}>
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            onFinish={onfinish}
+        <Col xs={22} sm={16} md={12} lg={8}>
+          <Card
+            className="login-card"
+            title={
+              <div style={{ textAlign: "center" }}>
+                <img
+                  src="/assets/DJMASTER.png"
+                  alt="DJ Master Logo"
+                  style={{ width: "150px", marginBottom: "20px" }}
+                />
+                <h2 style={{ margin: 0, color: "#1890ff" }}>Welcome Back</h2>
+              </div>
+            }
+            bordered={false}
+            style={{
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+              borderRadius: "12px",
+            }}
           >
-            <Form.Item label="username" name="name">
-              <Input />
-            </Form.Item>
-            <Form.Item label="password" name="password">
-              <Input.Password />
-            </Form.Item>
+            <Form
+              name="login"
+              onFinish={onfinish}
+              layout="vertical"
+              size="large"
+            >
+              <Form.Item
+                label="Username"
+                name="name"
+                rules={[{ required: true, message: "Please input your username!" }]}
+              >
+                <Input
+                  prefix={<UserOutlined style={{ color: "#1890ff" }} />}
+                  placeholder="Enter your username"
+                />
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: "Please input your password!" }]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined style={{ color: "#1890ff" }} />}
+                  placeholder="Enter your password"
+                />
+              </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Sign IN
-              </Button>
-            </Form.Item>
-          </Form>
+              <Form.Item style={{ marginBottom: 0 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    borderRadius: "6px",
+                    fontSize: "16px",
+                  }}
+                >
+                  Sign In
+                </Button>
+              </Form.Item>
+            </Form>
+          </Card>
         </Col>
       </Row>
     </div>
