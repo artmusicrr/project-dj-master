@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 import ImageModal from "../../components/ImageModal";
-import { Home, HomeOutlined } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { HomeOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom"
 
 const Gallery: React.FC = () => {
