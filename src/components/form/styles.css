@@ -4,19 +4,21 @@
   position: absolute;
   top: 100px;
   left: 400px;
-  background: #aed3f5;
-  padding: 20px;
-  opacity: 0.9;
-  box-shadow: 0 5px 25px rgba(1, 1, 1, 0.5);
+  background: #ffffff;
+  padding: 30px;
+  opacity: 1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   max-width: 550px;
   width: 100%;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 .container-form h1 {
   text-align: center;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
   font-size: 24px;
+  color: #1890ff;
+  font-weight: 600;
 }
 
 .form-container {
@@ -47,38 +49,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 12px;
+  margin-bottom: 8px;
 }
 
-.container-message textarea {
-  display: flex;
+.container-button button {
   width: 100%;
-  height: 100px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background: #1890ff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
   max-width: 540px;
 }
 
-.mensagem-enviada {
-  width: 400px;
-  height: 30px;
-  top: 0;
+.container-button button:hover {
+  background: #40a9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+}
+
+.container-message textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 6px;
+  resize: vertical;
 }
 
 .date-select {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  margin-bottom: 12px;
+}
 
-  input {
-    height: 30px;
-    border: none;
-  }
-  label {
-    margin-left: 10px;
-  }
+.date-select input {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 14px;
+}
+
+.select {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 14px;
+  margin-top: 6px;
+  background: #ffffff;
 }
 
 .label-date :focus-visible {
@@ -95,15 +123,9 @@
   outline: none;
 }
 
-.select-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-left: 0px;
-  margin-top: 0px;
-  label {
-    margin-bottom: 5px;
-  }
+.select-container label {
+  margin-left: 0px;
+  align-items: center;
 }
 
 .label-float {
@@ -114,17 +136,19 @@
 
 .label-float input {
   width: 100%;
-  height: 30px;
-  border: 0;
-  border-bottom: 2px solid lightgrey;
+  height: 32px;
+  border: 1px solid #d9d9d9;
   outline: none;
   min-width: 180px;
-  font-size: 16px;
-  transition: all 0.3s ease-out;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -webkit-appearance: none;
-  border-radius: 1;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 4px 12px;
+  background: #ffffff;
+}
+
+.label-float input:hover {
+  border-color: #40a9ff;
 }
 
 .label-float input:focus {
@@ -140,23 +164,26 @@
   position: absolute;
   top: 0;
   left: 10px;
-  margin-top: 13px;
+  margin-top: 10px;
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
 }
 
-.label-float input:required:invalid + label {
+.label-float input:required:invalid+label {
   color: red;
 }
+
 .label-float input:focus:required:invalid {
   border-bottom: 2px solid red;
 }
-.label-float input:required:invalid + label:before {
+
+.label-float input:required:invalid+label:before {
   content: "*";
 }
-.label-float input:focus + label,
-.label-float input:not(:placeholder-shown) + label {
+
+.label-float input:focus+label,
+.label-float input:not(:placeholder-shown)+label {
   font-size: 13px;
   margin-top: -5px;
   color: #3951b2;
@@ -167,51 +194,62 @@
   flex-direction: column;
 }
 
-@media (max-width: 1040px) {
-  .container-form {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50px;
-    left: 0px;
+.container-form {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 20px;
+  opacity: 1;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  max-width: 550px;
+  width: 90%;
+  border-radius: 16px;
+  max-height: 100%;
+}
 
-    background: #aed3f5;
-    padding: 10px;
-    opacity: 0.9;
-    box-shadow: 0 5px 25px rgba(1, 1, 1, 0.5);
-    max-width: 380px;
-    border-radius: 6px;
-  }
+.container-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #1890ff;
+  font-weight: 600;
+}
 
-  .container-form h1 {
-    text-align: center;
-    margin-bottom: 0px;
-    font-size: 20px;
-  }
+.container-message textarea {
+  min-height: 60px;
+  max-height: 120px;
+}
 
-  .mensagem-enviada {
-    width: 350px;
-    height: 30px;
-    top: 0;
-  }
+.mensagem-enviada {
+  width: 350px;
+  height: 30px;
+  top: 0;
+}
 
-  .container-message textarea {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 340px;
-  }
+.container-message textarea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 340px;
+  margin-top: 8px;
+}
 
-  .date-select {
-    flex-direction: column;
-    input {
-      width: 100%;
-    }
-  }
+.date-select {
+  flex-direction: column;
+  margin-top: 8px;
 
-  .select-container label {
-    margin-left: 0px;
-    align-items: center;
+  input {
+    width: 100%;
+    height: 36px;
   }
+}
+
+.select-container label {
+  margin-left: 0px;
+  align-items: center;
 }
