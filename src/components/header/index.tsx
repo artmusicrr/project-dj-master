@@ -25,12 +25,9 @@ const Header: React.FC = () => {
     setFormActive(!formActive)
   }
 
-  const handleNavigate = () => {
-    navigate("/login")
+  const handleNavigate = (path: string) => {
+    navigate(path)
   }
-  // const closeMenu = () => {
-  //   setMenuActive(false)
-  // }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,6 +44,7 @@ const Header: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [formActive])
+
   return (
     <header>
       <a href="#" className="brand">
@@ -63,13 +61,19 @@ const Header: React.FC = () => {
         <div className="nav-items">
           <a href="#" onClick={(e) => {
             e.preventDefault();
-            navigate('/');
+            handleNavigate('/');
           }}>Home</a>
-          <a href="#">Serviços</a>
-          <a href="#">Empresa</a>
           <a href="#" onClick={(e) => {
             e.preventDefault();
-            navigate('/gallery');
+            handleNavigate('/services');
+          }}>Serviços</a>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            handleNavigate('/company');
+          }}>Empresa</a>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            handleNavigate('/gallery');
           }}>Galeria</a>
           <a
             href="#"
@@ -80,7 +84,10 @@ const Header: React.FC = () => {
           >
             Contato
           </a>
-          <a href="#" onClick={handleNavigate}>ADM</a>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            handleNavigate('/login');
+          }}>ADM</a>
         </div>
       </div>
       {formActive && <Form ref={formRef} />}
