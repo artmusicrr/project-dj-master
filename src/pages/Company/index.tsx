@@ -1,18 +1,18 @@
 import React from "react"
-import { HomeOutlined } from "@ant-design/icons"
-import { useNavigate } from "react-router-dom"
+//import { HomeOutlined } from "@ant-design/icons"
+//import { useNavigate } from "react-router-dom"
+import { HeaderPages } from "../../components/headerPages"
+
 
 export const Company = () => {
 
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
 
     return (
         <div>
+            <HeaderPages title="Empresa" />
 
-            <span>COMPANY</span>
-            <div className="home-button">
-                <HomeOutlined className="home-icon" onClick={() => navigate("/")} />
-            </div>
+
 
         </div>
     )

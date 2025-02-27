@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import { useNavigate } from "react-router-dom"
 import { Col, Row, Form, Input, Button, message, Card } from "antd"
 import { HomeOutlined, UserOutlined, LockOutlined } from "@ant-design/icons"
+import { HeaderPages } from "../../components/headerPages"
 
 export const Login = () => {
   const auth = useAuth()
@@ -20,45 +21,26 @@ export const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="home-button">
-        <HomeOutlined
-          onClick={() => navigate("/")}
-          style={{
-            fontSize: "20px",
-            color: "#1890ff",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        />
-      </div>
+
+      <HeaderPages title="" />
       <Row
         justify="center"
         align="middle"
-        style={{
-          minHeight: "100vh",
-          padding: "20px",
-        }}
       >
         <Col xs={22} sm={16} md={12} lg={8}>
           <Card
             className="login-card"
             title={
-              <div style={{ textAlign: "center" }}>
+              <div className="login-card-title">
                 <img
                   src="/assets/DJMASTER.png"
                   alt="DJ Master Logo"
-                  style={{ width: "150px", marginBottom: "20px" }}
+                  className="login-card-logo"
                 />
-                <h2 style={{ margin: 0, color: "#1890ff" }}>Welcome Back</h2>
+                <h2 className="login-card-heading">Welcome Back</h2>
               </div>
             }
             bordered={false}
-            style={{
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-              borderRadius: "12px",
-            }}
           >
             <Form
               name="login"
@@ -72,7 +54,7 @@ export const Login = () => {
                 rules={[{ required: true, message: "Please input your username!" }]}
               >
                 <Input
-                  prefix={<UserOutlined style={{ color: "#1890ff" }} />}
+                  prefix={<UserOutlined className="login-form-icon" />}
                   placeholder="Enter your username"
                 />
               </Form.Item>
@@ -82,7 +64,7 @@ export const Login = () => {
                 rules={[{ required: true, message: "Please input your password!" }]}
               >
                 <Input.Password
-                  prefix={<LockOutlined style={{ color: "#1890ff" }} />}
+                  prefix={<LockOutlined className="login-form-icon" />}
                   placeholder="Enter your password"
                 />
               </Form.Item>
@@ -91,12 +73,7 @@ export const Login = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  style={{
-                    width: "100%",
-                    height: "40px",
-                    borderRadius: "6px",
-                    fontSize: "16px",
-                  }}
+                  className="login-submit-button"
                 >
                   Sign In
                 </Button>

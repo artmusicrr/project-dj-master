@@ -1,6 +1,7 @@
 import React from "react"
 import { HomeOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
+import { HeaderPages } from "../../components/headerPages"
 
 
 export const Services = () => {
@@ -10,10 +11,7 @@ export const Services = () => {
     return (
         <div>
 
-            <div className="home-button">
-                <HomeOutlined className="home-icon" onClick={() => navigate("/")} />
-            </div>
-            <span>SERVICES</span>
+            <HeaderPages title="SERVIÇOS" />
 
         </div>
     )
