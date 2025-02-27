@@ -9,7 +9,6 @@ export const Home = () => {
     <Styled.Container>
       <Header />
       <Section slides={[]} fontSize={16} color="black" />
-      {/* <Gallery /> */}
     </Styled.Container>
   )
 }

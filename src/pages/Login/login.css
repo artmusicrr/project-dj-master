@@ -1,19 +1,37 @@
+.login-container {
+  min-height: 100vh;
+  padding: 130px 20px;
 
-.login {
-  width: 100%;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-input,
-button {
-  width: 250px;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 8px;
+.login-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.login-card-title {
+  text-align: center;
+}
+
+.login-card-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.login-card-heading {
+  margin: 0;
+  color: #1890ff;
+}
+
+.login-form-icon {
+  color: #1890ff;
+}
+
+.login-submit-button {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
 .home-button {
