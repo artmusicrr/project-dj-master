@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { fetchSlidesRequest } from "../../store/slides/actions"
 
+
 const { Option } = Select
 
 export const Privada: React.FC = () => {
@@ -47,7 +48,7 @@ export const Privada: React.FC = () => {
 
   useEffect(() => {
     if (slidesRedux) {
-      setSlides(slidesRedux)
+      setSlides(slidesRedux.slides)
     }
   }, [slidesRedux])
 
@@ -70,89 +71,89 @@ export const Privada: React.FC = () => {
           case "update-title":
             setTextAreaValue(
               selectedSlide.title ||
-                (slides.length > 0 ? slides[0].title : "") ||
-                "",
+              (slides.length > 0 ? slides[0].title : "") ||
+              "",
             )
             setColor(
               selectedSlide.color_title ||
-                (slides.length > 0 ? slides[0].color_title : "#000000") ||
-                "#000000",
+              (slides.length > 0 ? slides[0].color_title : "#000000") ||
+              "#000000",
             )
             setFontSize(
               Number(
                 selectedSlide.font_size_title ||
-                  (slides.length > 0 ? slides[0].font_size_title : 16),
+                (slides.length > 0 ? slides[0].font_size_title : 16),
               ) || 16,
             )
             setFontWeight(
               selectedSlide.font_weight_title ||
-                (slides.length > 0 ? slides[0].font_weight_title : "normal") ||
-                "normal",
+              (slides.length > 0 ? slides[0].font_weight_title : "normal") ||
+              "normal",
             )
             setFontFamily(
               selectedSlide.font_family_title ||
-                (slides.length > 0 ? slides[0].font_family_title : "Arial") ||
-                "Arial",
+              (slides.length > 0 ? slides[0].font_family_title : "Arial") ||
+              "Arial",
             )
             break
           case "update-sub-title":
             setTextAreaValue(
               selectedSlide.sub_title ||
-                (slides.length > 0 ? slides[0].sub_title : "") ||
-                "",
+              (slides.length > 0 ? slides[0].sub_title : "") ||
+              "",
             )
             setColor(
               selectedSlide.color_sub_title ||
-                (slides.length > 0 ? slides[0].color_sub_title : "#000000") ||
-                "#000000",
+              (slides.length > 0 ? slides[0].color_sub_title : "#000000") ||
+              "#000000",
             )
             setFontSize(
               Number(
                 selectedSlide.font_size_sub_title ||
-                  (slides.length > 0 ? slides[0].font_size_sub_title : 16),
+                (slides.length > 0 ? slides[0].font_size_sub_title : 16),
               ) || 16,
             )
             setFontWeight(
               selectedSlide.font_weight_sub_title ||
-                (slides.length > 0
-                  ? slides[0].font_weight_sub_title
-                  : "normal") ||
-                "normal",
+              (slides.length > 0
+                ? slides[0].font_weight_sub_title
+                : "normal") ||
+              "normal",
             )
             setFontFamily(
               selectedSlide.font_family_sub_title ||
-                (slides.length > 0
-                  ? slides[0].font_family_sub_title
-                  : "Arial") ||
-                "Arial",
+              (slides.length > 0
+                ? slides[0].font_family_sub_title
+                : "Arial") ||
+              "Arial",
             )
             break
           case "update-text":
             setTextAreaValue(
               selectedSlide.text ||
-                (slides.length > 0 ? slides[0].text : "") ||
-                "",
+              (slides.length > 0 ? slides[0].text : "") ||
+              "",
             )
             setColor(
               selectedSlide.color_text ||
-                (slides.length > 0 ? slides[0].color_text : "#000000") ||
-                "#000000",
+              (slides.length > 0 ? slides[0].color_text : "#000000") ||
+              "#000000",
             )
             setFontSize(
               Number(
                 selectedSlide.font_size_text ||
-                  (slides.length > 0 ? slides[0].font_size_text : 16),
+                (slides.length > 0 ? slides[0].font_size_text : 16),
               ) || 16,
             )
             setFontWeight(
               selectedSlide.font_weight_text ||
-                (slides.length > 0 ? slides[0].font_weight_text : "normal") ||
-                "normal",
+              (slides.length > 0 ? slides[0].font_weight_text : "normal") ||
+              "normal",
             )
             setFontFamily(
               selectedSlide.font_family_text ||
-                (slides.length > 0 ? slides[0].font_family_text : "Arial") ||
-                "Arial",
+              (slides.length > 0 ? slides[0].font_family_text : "Arial") ||
+              "Arial",
             )
             break
 

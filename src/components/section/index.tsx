@@ -29,7 +29,7 @@ const Section: React.FC<ICustonTitle> = () => {
 
   useEffect(() => {
     if (slidesRedux) {
-      setSlides(slidesRedux)
+      setSlides(slidesRedux.slides)
       setIsLoading(false) // Mova o setIsLoading para cá
     }
   }, [slidesRedux])
@@ -72,9 +72,8 @@ const Section: React.FC<ICustonTitle> = () => {
           <img
             src={`http://localhost:4000${slide.image_url}`}
             alt={`Slide ${slide.id}`}
-            className={`video-slide ${
-              index === activeContentIndex ? "active" : ""
-            }`}
+            className={`video-slide ${index === activeContentIndex ? "active" : ""
+              }`}
           />
           <div
             className={`content ${index === activeContentIndex ? "active" : ""}`}
