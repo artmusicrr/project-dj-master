@@ -30,7 +30,9 @@ const Section: React.FC<ICustonTitle> = () => {
   useEffect(() => {
     if (slidesRedux) {
       setSlides(slidesRedux.slides)
-      setIsLoading(false) // Mova o setIsLoading para cá
+
+      setIsLoading(false)
+
     }
   }, [slidesRedux])
 

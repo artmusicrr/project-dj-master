@@ -12,11 +12,11 @@ const Gallery: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [images, setImages] = useState<GalleryTypes[]>([]);
     const [selectedImage, setSelectedImage] = useState<{ url: string; alt: string } | null>(null);
 
-    const { gallery: galleryRedux } = useSelector(
-        (state: RootState) => state.gallery,
+    const { images: galleryImages } = useSelector(
+        (state: RootState) => state.gallery.gallery
+
     );
 
     useEffect(() => {
@@ -24,36 +24,33 @@ const Gallery: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (galleryRedux) {
-            console.log("galleryRedux ====>", galleryRedux);
-            const processedImages = galleryRedux.images.map(image => ({
-                ...image,
-                image_url: `http://localhost:4000${image}`,
-                src: `http://localhost:4000${image}`,
-                alt: 'Gallery Image'
-            }));
-            setImages(processedImages);
-        }
-    }, [galleryRedux]);
 
-    console.log("images ====>", images);
+        console.log("galleryImages ====>", galleryImages);
+    }, [galleryImages]);
+
 
     return (
         <div className="gallery-container">
             <h1>Nossa Galeria</h1>
             <div className="gallery-grid">
-                {images.map((item) => {
-                    console.log("Image src:", item.src);
-                    return (
-                        <div
-                            key={item.id}
-                            className="gallery-item"
-                            onClick={() => setSelectedImage({ url: item.image_url || '', alt: item.alt })}
-                        >
-                            <img src={item.image_url} alt={item.alt} loading="lazy" />
-                        </div>
-                    );
-                })}
+
+                {galleryImages && galleryImages.map((imagePath, index) => (
+                    <div
+                        key={index}
+                        className="gallery-item"
+                        onClick={() => setSelectedImage({ 
+                            url: `http://localhost:4000${imagePath}`, 
+                            alt: 'Gallery Image' 
+                        })}
+                    >
+                        <img 
+                            src={`http://localhost:4000${imagePath}`} 
+                            alt="Gallery Image" 
+                            loading="lazy" 
+                        />
+                    </div>
+                ))}
+
             </div>
 
             <div className="home-button">

@@ -15,20 +15,12 @@
 .content-protected {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px); /* Adjust for header height */
+  top: 60px; /* Header height */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  .ant-card-head {
-    padding: 0 10px;
-    min-height: 35px;
-  }
-
-  .ant-card .ant-card-body {
-    padding: 0 10px;
-  }
+  background-color: #f0f2f5;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -93,27 +85,21 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
-  border: 1px solid black;
-  display: flex; /* Usar flexbox para as colunas */
+  padding: 20px;
+  gap: 20px;
+  overflow-y: auto;
 }
 
 .body-left {
-  width: 50%;
+  flex: 1;
+  min-width: 0; /* Prevent flex item from overflowing */
   height: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 5px;
-  width: 50%; /* Largura da coluna da esquerda */
-  padding: 5px;
 }
 
 .body-right {
-  width: 50%;
-  width: 50%; /* Largura da coluna da direita */
-  padding: 5px;
-  border-left: 1px solid #ccc; /* Adicionar uma borda para separar as colunas */
+  flex: 1;
+  min-width: 0; /* Prevent flex item from overflowing */
+  height: 100%;
 }
 
 /* -------------------------------------------------------------------------- */
