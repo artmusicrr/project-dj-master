@@ -1,9 +1,11 @@
-// store/index.ts
-import { configureStore } from "@reduxjs/toolkit";
-import createSagaMiddleware from "redux-saga";
-import rootReducer from "./rootReducer"; // Certifique-se de combinar os reducers de slides e gallery aqui.
-import rootSaga from "./rootSaga"; // Importa o root saga que você acabou de criar.
-import { Middleware } from "redux";
+
+// store.ts
+import { configureStore } from "@reduxjs/toolkit"
+import createSagaMiddleware from "redux-saga"
+import rootReducer from "./rootReducer"
+import rootSaga from "./rootSaga"
+import { Middleware } from "redux"
+
 
 const sagaMiddleware = createSagaMiddleware();
 

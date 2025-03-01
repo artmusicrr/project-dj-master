@@ -4,6 +4,9 @@ import Home from "./pages/Home"
 import { Privada } from "./pages/Privada"
 import { ProtectedLayout } from "./components/ProtectedLayout"
 import { Login } from "./pages/Login"
+import Gallery from "./pages/Gallery"
+import Services from "./pages/Services"
+import Company from "./pages/Company"
 import * as Styled from "./styles"
 import Galery from "./pages/Gallery"
 import Company from "./pages/Company/index"
@@ -15,9 +18,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/gallery" element={<Galery />} />
-        <Route path="/company" element={<Company />} />
+
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/company" element={<Company />} />
+
         <Route
           path="/privada"
           element={
