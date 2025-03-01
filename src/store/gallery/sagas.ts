@@ -1,3 +1,4 @@
+
 import { call, put, Effect } from "redux-saga/effects"
 import { take, fork } from "redux-saga/effects"
 import { GalleryActionTypes, GalleryTypes, UploadImagePayload } from "./types"
@@ -66,6 +67,7 @@ const uploadImageApi = async (payload: UploadImagePayload): Promise<GalleryTypes
 
 // Saga Workers
 function* fetchGallerySaga(): Generator<Effect, void, GalleryTypes[]> {
+
   try {
     const gallery: GalleryTypes[] = yield call(fetchGalleryApi)
     yield put(fetchGallerySuccess(gallery))
@@ -74,6 +76,7 @@ function* fetchGallerySaga(): Generator<Effect, void, GalleryTypes[]> {
       fetchGalleryFailure(
         error instanceof Error
           ? error.message
+
           : "Erro desconhecido ao buscar imagens"
       )
     )
@@ -117,6 +120,7 @@ function* watchGallerySagas(): Generator<Effect, void, never> {
       const uploadTask = () => uploadImageSaga(action.payload)
       yield fork(uploadTask)
     }
+
   }
 }
 

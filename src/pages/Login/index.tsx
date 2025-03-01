@@ -2,8 +2,9 @@ import React from "react"
 import "./login.css"
 import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import { useNavigate } from "react-router-dom"
-import { Col, Row, Form, Input, Button, message } from "antd"
-import { HomeOutlined } from "@ant-design/icons"
+import { Col, Row, Form, Input, Button, message, Card } from "antd"
+import { HomeOutlined, UserOutlined, LockOutlined } from "@ant-design/icons"
+import { HeaderPages } from "../../components/headerPages"
 
 export const Login = () => {
   const auth = useAuth()
@@ -19,59 +20,66 @@ export const Login = () => {
   }
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "200px",
-          marginTop: "20px",
-          marginLeft: "20px",
-        }}
-      >
-        <HomeOutlined
-          onClick={() => navigate("/")}
-          style={{
-            fontSize: "20px",
-            marginRight: "10px",
-            color: "#1890ff",
-            cursor: "pointer",
-          }}
-        />
-        <h3>Home</h3>
-      </div>
+    <div className="login-container">
+
+      <HeaderPages title="" />
       <Row
         justify="center"
         align="middle"
-        style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
       >
-        <Col span={12}>
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            onFinish={onfinish}
+        <Col xs={22} sm={16} md={12} lg={8}>
+          <Card
+            className="login-card"
+            title={
+              <div className="login-card-title">
+                <img
+                  src="/assets/DJMASTER.png"
+                  alt="DJ Master Logo"
+                  className="login-card-logo"
+                />
+                <h2 className="login-card-heading">Welcome Back</h2>
+              </div>
+            }
+            bordered={false}
           >
-            <Form.Item label="username" name="name">
-              <Input />
-            </Form.Item>
-            <Form.Item label="password" name="password">
-              <Input.Password />
-            </Form.Item>
+            <Form
+              name="login"
+              onFinish={onfinish}
+              layout="vertical"
+              size="large"
+            >
+              <Form.Item
+                label="Username"
+                name="name"
+                rules={[{ required: true, message: "Please input your username!" }]}
+              >
+                <Input
+                  prefix={<UserOutlined className="login-form-icon" />}
+                  placeholder="Enter your username"
+                />
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: "Please input your password!" }]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined className="login-form-icon" />}
+                  placeholder="Enter your password"
+                />
+              </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Sign IN
-              </Button>
-            </Form.Item>
-          </Form>
+              <Form.Item style={{ marginBottom: 0 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-submit-button"
+                >
+                  Sign In
+                </Button>
+              </Form.Item>
+            </Form>
+          </Card>
         </Col>
       </Row>
     </div>

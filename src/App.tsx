@@ -8,7 +8,9 @@ import Gallery from "./pages/Gallery"
 import Services from "./pages/Services"
 import Company from "./pages/Company"
 import * as Styled from "./styles"
-import Form from "./components/form"
+import Galery from "./pages/Gallery"
+import Company from "./pages/Company/index"
+import Services from "./pages/Services/index"
 
 function App() {
   return (
@@ -16,9 +18,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/services" element={<Services />} />
         <Route path="/company" element={<Company />} />
+
         <Route
           path="/privada"
           element={

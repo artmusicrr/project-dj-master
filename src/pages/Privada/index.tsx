@@ -1,10 +1,12 @@
 import React from "react"
 import "./styles.css"
+
 import { HeaderProtected } from "../../components/headerProtected"
 import SlideControlPanel from "../../components/SlideControlPanel"
 import GalleryManager from "../../components/GalleryManager"
 
 export const Privada: React.FC = () => {
+
   return (
     <div className="container-protected">
       <HeaderProtected />

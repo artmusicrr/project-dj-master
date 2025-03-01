@@ -10,18 +10,21 @@ const initialState: GalleryState = {
   error: null,
 }
 
-// Reducer específico para gallery
+
 export const galleryReducer = (
   state = initialState,
   action: AnyAction,
 ): GalleryState => {
   switch (action.type) {
     case GalleryActionTypes.FETCH_GALLERY_REQUEST:
+
     case GalleryActionTypes.UPLOAD_IMAGE_REQUEST:
       return { ...state, loading: true, error: null }
 
+
     case GalleryActionTypes.FETCH_GALLERY_SUCCESS:
       return { ...state, loading: false, images: action.payload, error: null }
+
 
     case GalleryActionTypes.UPLOAD_IMAGE_SUCCESS:
       return {
@@ -33,6 +36,7 @@ export const galleryReducer = (
 
     case GalleryActionTypes.FETCH_GALLERY_FAILURE:
     case GalleryActionTypes.UPLOAD_IMAGE_FAILURE:
+
       return { ...state, loading: false, error: action.payload }
 
     default:
@@ -40,7 +44,7 @@ export const galleryReducer = (
   }
 }
 
-// Combina o galleryReducer em um rootReducer
+
 const rootReducer = combineReducers({
   gallery: galleryReducer,
 })

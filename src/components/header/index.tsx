@@ -28,6 +28,7 @@ const Header: React.FC = () => {
   const handleNavigate = (path: string) => {
     navigate(path)
     setMenuActive(false)
+
   }
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const Header: React.FC = () => {
     transition: '0.3s ease'
   }
 
+
   return (
     <header>
       <a onClick={() => handleNavigate("/")} className="brand">
@@ -72,10 +74,12 @@ const Header: React.FC = () => {
         onClick={toggleMenu}
       >
         <div className="nav-items">
+
           <a onClick={() => handleNavigate("/")}>Home</a>
           <a onClick={() => handleNavigate("/services")}>Serviços</a>
           <a onClick={() => handleNavigate("/company")}>Empresa</a>
           <a onClick={() => handleNavigate("/gallery")}>Galeria</a>
+
           <a
             onClick={(e) => {
               e.preventDefault()
@@ -84,7 +88,9 @@ const Header: React.FC = () => {
           >
             Contato
           </a>
+
           <a onClick={() => handleNavigate("/login")}>ADM</a>
+
         </div>
       </div>
       {formActive && <Form ref={formRef} />}

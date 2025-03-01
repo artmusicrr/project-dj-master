@@ -1,4 +1,6 @@
+
 import { GalleryActionTypes, GalleryTypes, UploadImagePayload } from "./types"
+
 
 export const fetchGalleryRequest = () => (
   console.log("fetchGalleryRequest", GalleryActionTypes.FETCH_GALLERY_REQUEST),
@@ -17,6 +19,7 @@ export const fetchGalleryFailure = (error: string) => ({
   payload: error,
 })
 
+
 export const uploadImageRequest = (payload: UploadImagePayload) => ({
   type: GalleryActionTypes.UPLOAD_IMAGE_REQUEST,
   payload,
@@ -31,3 +34,4 @@ export const uploadImageFailure = (error: string) => ({
   type: GalleryActionTypes.UPLOAD_IMAGE_FAILURE,
   payload: error,
 })
+

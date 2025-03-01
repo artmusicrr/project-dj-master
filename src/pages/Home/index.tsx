@@ -1,6 +1,7 @@
 import React from "react"
 import Header from "../../components/header"
 import Section from "../../components/section"
+// import Gallery from "../Gallery"
 import * as Styled from "./styles"
 
 export const Home = () => {
