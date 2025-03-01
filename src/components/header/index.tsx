@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-
 import "./styles.css"
 import Form from "../form"
 
-const logo = "/assets/DJMASTER.png"
-const iconTitle = "./cd-small.ico"
+const logo = `${process.env.PUBLIC_URL}/assets/DJMASTER.png`
+const hamburgerIcon = `${process.env.PUBLIC_URL}/assets/hamburger.png`
+const closeIcon = `${process.env.PUBLIC_URL}/assets/close.png`
 
 const Header: React.FC = () => {
   const [menuActive, setMenuActive] = React.useState(false)
@@ -25,12 +25,10 @@ const Header: React.FC = () => {
     setFormActive(!formActive)
   }
 
-  const handleNavigate = () => {
-    navigate("/login")
+  const handleNavigate = (path: string) => {
+    navigate(path)
+    setMenuActive(false)
   }
-  // const closeMenu = () => {
-  //   setMenuActive(false)
-  // }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,13 +45,26 @@ const Header: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [formActive])
+
+  const menuBtnStyle = {
+    backgroundImage: `url(${menuActive ? closeIcon : hamburgerIcon})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '30px',
+    backgroundPosition: 'center',
+    width: '40px',
+    height: '40px',
+    cursor: 'pointer',
+    transition: '0.3s ease'
+  }
+
   return (
     <header>
-      <a href="#" className="brand">
+      <a onClick={() => handleNavigate("/")} className="brand">
         <img src={logo} alt="Logo DJ Master" />
       </a>
       <div
-        className={`menu-btn ${menuActive ? "active" : ""}`}
+        className="menu-btn"
+        style={menuBtnStyle}
         onClick={toggleMenu}
       ></div>
       <div
@@ -61,12 +72,11 @@ const Header: React.FC = () => {
         onClick={toggleMenu}
       >
         <div className="nav-items">
-          <a href="#">Home</a>
-          <a href="#">Serviços</a>
-          <a href="#">Empresa</a>
-          <a href="#">Galeria</a>
+          <a onClick={() => handleNavigate("/")}>Home</a>
+          <a onClick={() => handleNavigate("/services")}>Serviços</a>
+          <a onClick={() => handleNavigate("/company")}>Empresa</a>
+          <a onClick={() => handleNavigate("/gallery")}>Galeria</a>
           <a
-            href="#"
             onClick={(e) => {
               e.preventDefault()
               toggleForm()
@@ -74,7 +84,7 @@ const Header: React.FC = () => {
           >
             Contato
           </a>
-          <a href="#" onClick={handleNavigate}>ADM</a>
+          <a onClick={() => handleNavigate("/login")}>ADM</a>
         </div>
       </div>
       {formActive && <Form ref={formRef} />}

@@ -1,0 +1,43 @@
+.gallery-manager-card {
+  width: 100%;
+  height: 100%;
+  margin: 5px;
+  padding: 10px;
+}
+
+.gallery-manager-card .ant-upload {
+  width: 100%;
+}
+
+.gallery-manager-card .ant-upload-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.gallery-manager-card .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.gallery-manager-card .ant-btn {
+  width: 100%;
+}
+
+.gallery-manager-card .ant-form-item-label {
+  padding: 0;
+}
+
+.gallery-manager-card .ant-input {
+  border-radius: 4px;
+}
+
+.gallery-manager-card .ant-upload-list-item-info {
+  padding: 0 4px;
+}
+
+.gallery-manager-card .ant-card-head {
+  min-height: 40px;
+  padding: 0 12px;
+  color: #1890ff;
+  font-weight: 600;
+  font-size: 16px;
+}

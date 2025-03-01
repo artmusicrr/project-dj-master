@@ -26,6 +26,7 @@ header .brand {
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
+  cursor: pointer;
 }
 
 header .navigation {
@@ -40,13 +41,13 @@ header .navigation .nav-items a {
   text-decoration: none;
   margin-left: 30px;
   transition: 0.3s ease;
+  cursor: pointer;
 }
 
 header .navigation .nav-items a::before {
   content: "";
   position: absolute;
   background: #3280f7;
-
   width: 0;
   height: 3px;
   bottom: 0;
@@ -61,12 +62,72 @@ header .navigation .nav-items a:hover::before {
 header a img {
   position: absolute;
   top: 0;
-
   width: 200px;
 }
 
 @media (max-width: 1040px) {
   header {
     padding: 12px 20px;
+  }
+
+  header .navigation {
+    display: none;
+  }
+
+  header .navigation.active {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(1, 1, 1, 0.5);
+  }
+
+  header .navigation .nav-items a {
+    color: #222;
+    font-size: 1.2em;
+    margin: 20px;
+  }
+
+  header .navigation .nav-items {
+    opacity: 0.9;
+    background: #aed3f5 !important;
+    width: 370px !important;
+    max-width: 600px;
+    margin: 20px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+  }
+
+  header .navigation .nav-items a::before {
+    background: #3280f7;
+    height: 5px;
+  }
+
+  .menu-btn {
+    background-image: url('/public/assets/hamburger.png');
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  .menu-btn.active {
+    z-index: 999;
+    background-image: url('/public/assets/close.png');
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: center;
+    transition: 0.3s ease;
   }
 }
