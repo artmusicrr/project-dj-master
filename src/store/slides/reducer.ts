@@ -17,11 +17,6 @@ export const slidesReducer = (
 ): SlidesState => {
   switch (action.type) {
     case SlidesActionTypes.FETCH_SLIDES_REQUEST:
-      console.log(
-        "FETCH_SLIDES_REQUEST",
-        SlidesActionTypes.FETCH_SLIDES_REQUEST,
-        action, // ⬅️ Ação disparada
-      )
       return { ...state, loading: true, error: null, slides: [] }
 
     case SlidesActionTypes.FETCH_SLIDES_SUCCESS:

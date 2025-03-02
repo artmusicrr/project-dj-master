@@ -4,11 +4,6 @@ import { DownOutlined } from "@ant-design/icons"
 import { Space, Popover } from "antd"
 import { ICustonTitle } from "../../types/typesCustnTitle"
 
-// /**
-//  * @param defaultValue - The default color value.
-//  * @param showText - A function that returns the JSX for displaying text related to the color.
-//  */
-
 const CustomColorPicker: React.FC<ICustonTitle> = ({
   defaultValue,
   showText,
@@ -16,7 +11,6 @@ const CustomColorPicker: React.FC<ICustonTitle> = ({
 }) => {
   const [color, setColor] = useState(defaultValue || "#1677ff")
   const [open, setOpen] = useState(false)
-  //console.log("color ==>", color)
 
   const handleChangeComplete = (color: ColorResult) => {
     const selectedColor = color.hex
@@ -32,8 +26,8 @@ const CustomColorPicker: React.FC<ICustonTitle> = ({
         <SketchPicker color={color} onChangeComplete={handleChangeComplete} />
       }
       trigger="click"
-      visible={open}
-      onVisibleChange={setOpen}
+      open={open}
+      onOpenChange={setOpen}
     >
       <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
         <div

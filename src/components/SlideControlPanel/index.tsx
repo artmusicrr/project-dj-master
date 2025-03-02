@@ -145,7 +145,7 @@ const SlideControlPanel: React.FC = () => {
   }
 
   return (
-    <Card title="Painel de Controle dos Slides" className="slide-control-card">
+    <Card title="Painel de Controle dos Slides" className="slide-control-card" variant="outlined">
       <Form layout="vertical">
         <Row gutter={16}>
           <Col span={12}>

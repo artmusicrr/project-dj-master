@@ -16,24 +16,16 @@ const Gallery: React.FC = () => {
 
     const { images: galleryImages } = useSelector(
         (state: RootState) => state.gallery.gallery
-
     );
 
     useEffect(() => {
         dispatch(fetchGalleryRequest());
     }, [dispatch]);
 
-    useEffect(() => {
-
-        console.log("galleryImages ====>", galleryImages);
-    }, [galleryImages]);
-
-
     return (
         <div className="gallery-container">
             <h1>Nossa Galeria</h1>
             <div className="gallery-grid">
-
                 {galleryImages && galleryImages.map((imagePath, index) => (
                     <div
                         key={index}
@@ -50,7 +42,6 @@ const Gallery: React.FC = () => {
                         />
                     </div>
                 ))}
-
             </div>
 
             <div className="home-button">

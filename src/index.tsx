@@ -7,13 +7,12 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { AuthProvider } from "./contexts/AuthProvider"
-//import "antd/dist/antd.css"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <Provider store={store}>
           <App />
         </Provider>
