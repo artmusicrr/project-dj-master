@@ -26,20 +26,15 @@ const submitContactApi = async (formData: ContactFormData): Promise<void> => {
 
 const fetchContactsApi = async (): Promise<ContactResponse[]> => {
   const user = getUserLocalStorage();
-  console.log("User from localStorage:", user);
-
-  if (!user?.token) {
-    throw new Error("No authentication token found");
-  }
-
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${user.token}`,
-  };
-
+  console.log("Auth User:", user);
+  console.log("Auth Token:", user?.token);
+  
   const response = await fetch("http://localhost:4000/contact", {
     method: "GET",
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${user?.token}`
+    }
   });
 
   if (!response.ok) {

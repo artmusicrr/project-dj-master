@@ -16,9 +16,13 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   async function authenticate(name: string, password: string) {
     const response = await loginRequest(name, password)
+    
+    if (!response) {
+      throw new Error("Failed to authenticate")
+    }
 
     const payload = { token: response.token, name }
-
+    
     setUser(payload)
     setUserLocalStorage(payload)
   }

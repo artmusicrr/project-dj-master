@@ -17,7 +17,12 @@ const GalleryManager: React.FC = () => {
   const dispatch = useDispatch()
   
   const { error, loading, images: galleryImages } = useSelector((state: RootState) => state.gallery.gallery)
-  const { contacts = [] } = useSelector((state: RootState) => state.contact)
+  const { contacts = [] } = useSelector((state: RootState) => {
+    const contactState = state.contact;
+    return {
+      contacts: Array.isArray(contactState.contacts) ? contactState.contacts : []
+    };
+  });
 
   console.log('contacts==============>:', contacts)
 
@@ -175,7 +180,7 @@ console.log('É um array?', Array.isArray(contacts));
       title: 'Data do Evento',
       dataIndex: 'event_date',
       key: 'event_date',
-      render: (text: string) => new Date(text).toLocaleDateString('pt-BR'),
+      render: (text: string) => text ? new Date(text).toLocaleDateString('pt-BR') : '-',
     },
     {
       title: 'Tipo de Evento',
@@ -284,10 +289,13 @@ console.log('É um array?', Array.isArray(contacts));
         footer={null}
       >
         <Table
-          dataSource={contacts}
+          dataSource={contacts || []}
           columns={columns}
           scroll={{ x: true }}
           rowKey="id"
+          locale={{
+            emptyText: 'Nenhum contato encontrado'
+          }}
         />
       </Modal>
     </Card>
