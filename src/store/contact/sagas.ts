@@ -10,16 +10,10 @@ import {
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
 const submitContactApi = async (formData: ContactFormData): Promise<void> => {
-  const user = getUserLocalStorage()
-  if (!user?.token) {
-    throw new Error('No authentication token found')
-  }
-  
   const response = await fetch("http://localhost:4000/contact/form", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${user.token}`
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(formData),
   })
