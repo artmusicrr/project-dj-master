@@ -21,7 +21,6 @@ export const Login = () => {
 
   return (
     <div className="login-container">
-
       <HeaderPages title="" />
       <Row
         justify="center"
@@ -40,7 +39,7 @@ export const Login = () => {
                 <h2 className="login-card-heading">Welcome Back</h2>
               </div>
             }
-            bordered={false}
+            variant="outlined"
           >
             <Form
               name="login"

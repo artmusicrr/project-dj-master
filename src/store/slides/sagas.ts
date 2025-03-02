@@ -18,7 +18,6 @@ const fetchSlidesApi = async () => {
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
   const data = await response.json() // ⬅️ Armazenar o resultado
-  console.log("=============>:", data)
   return data
 }
 

@@ -17,17 +17,12 @@ const GalleryManager: React.FC = () => {
   const dispatch = useDispatch()
   
   const { error, loading, images: galleryImages } = useSelector((state: RootState) => state.gallery.gallery)
-  const { contacts = [] } = useSelector((state: RootState) => {
+  
+  // Memoize the contacts selector
+  const contacts = useSelector((state: RootState) => {
     const contactState = state.contact;
-    return {
-      contacts: Array.isArray(contactState.contacts) ? contactState.contacts : []
-    };
+    return Array.isArray(contactState.contacts) ? contactState.contacts : [];
   });
-
-  console.log('contacts==============>:', contacts)
-
-  console.log('contacts:', contacts);
-console.log('É um array?', Array.isArray(contacts));
 
   useEffect(() => {
     dispatch(fetchGalleryRequest())
@@ -103,8 +98,6 @@ console.log('É um array?', Array.isArray(contacts));
         throw new Error("Nome do arquivo não encontrado");
       }
       
-      console.log(`Solicitando exclusão da imagem: ${filename}`);
-      
       dispatch(deleteImageRequest({
         imageId: imageId,
         filename: filename
@@ -117,7 +110,6 @@ console.log('É um array?', Array.isArray(contacts));
       }, 500);
       
     } catch (err) {
-      console.error('Erro ao deletar imagem:', err);
       message.error("Erro ao deletar imagem");
     } finally {
       setDeleting(null);
@@ -195,7 +187,7 @@ console.log('É um array?', Array.isArray(contacts));
   ];
 
   return (
-    <Card title="Gerenciamento da Galeria" className="gallery-manager-card">
+    <Card title="Gerenciamento da Galeria" className="gallery-manager-card" variant="outlined">
       <Form layout="vertical">
         <Form.Item label="Enviar Nova Imagem">
           <Upload {...uploadProps} maxCount={1} accept="image/*">
@@ -289,7 +281,7 @@ console.log('É um array?', Array.isArray(contacts));
         footer={null}
       >
         <Table
-          dataSource={contacts || []}
+          dataSource={contacts}
           columns={columns}
           scroll={{ x: true }}
           rowKey="id"
