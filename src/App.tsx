@@ -8,9 +8,6 @@ import Gallery from "./pages/Gallery"
 import Services from "./pages/Services"
 import Company from "./pages/Company"
 import * as Styled from "./styles"
-// import Galery from "./pages/Gallery"
-// import Company from "./pages/Company/index"
-// import Services from "./pages/Services/index"
 
 function App() {
   return (

@@ -73,6 +73,13 @@
   box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
 }
 
+.container-button button:disabled {
+  background: #91caff;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .container-message textarea {
   width: 100%;
   min-height: 80px;
@@ -252,4 +259,11 @@
 .select-container label {
   margin-left: 0px;
   align-items: center;
+}
+
+.error-message {
+  color: #ff4d4f;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 14px;
 }
