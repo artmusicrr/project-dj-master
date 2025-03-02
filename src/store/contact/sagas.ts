@@ -26,8 +26,6 @@ const submitContactApi = async (formData: ContactFormData): Promise<void> => {
 
 const fetchContactsApi = async (): Promise<ContactResponse[]> => {
   const user = getUserLocalStorage();
-  console.log("Auth User:", user);
-  console.log("Auth Token:", user?.token);
   
   const response = await fetch("http://localhost:4000/contact", {
     method: "GET",
