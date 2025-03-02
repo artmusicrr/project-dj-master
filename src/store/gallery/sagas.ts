@@ -30,22 +30,11 @@ const uploadImageApi = async (payload: UploadImagePayload): Promise<GalleryTypes
     if (!payload.image) {
       throw new Error('Arquivo não fornecido')
     }
-
-    console.log('Iniciando upload da imagem:', {
-      name: payload.image.name,
-      size: payload.image.size,
-      type: payload.image.type
-    })
-
     const formData = new FormData()
-    formData.append("file", payload.image, payload.image.name)
+    formData.append("image", payload.image)
     formData.append("description", payload.description)
-
-    // Log do FormData para debug
     Array.from(formData.entries()).forEach(([key, value]) => {
-      console.log('FormData entry:', key, value instanceof File ? value.name : value)
     })
-
     const response = await fetch("http://localhost:4000/gallery/upload", {
       method: "POST",
       body: formData,
