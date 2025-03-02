@@ -1,6 +1,6 @@
-import React, { useState, forwardRef } from "react"
+import React, { useState, forwardRef, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { submitContactRequest } from "../../store/contact/actions"
+import { submitContactRequest, resetContactState } from "../../store/contact/actions"
 import { RootState } from "../../store"
 import "./styles.css"
 
@@ -16,6 +16,13 @@ const Form = forwardRef<HTMLDivElement>((props, ref) => {
     event_type: "casamento", // default value
     message: ""
   })
+
+  useEffect(() => {
+    // Limpa o estado quando o componente é desmontado
+    return () => {
+      dispatch(resetContactState())
+    }
+  }, [dispatch])
 
   const eventos = {
     casamento: "Casamento",

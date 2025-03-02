@@ -27,3 +27,7 @@ export const fetchContactsFailure = (error: string) => ({
   type: ContactActionTypes.FETCH_CONTACTS_FAILURE,
   payload: error,
 })
+
+export const resetContactState = () => ({
+  type: ContactActionTypes.RESET_CONTACT_STATE
+})

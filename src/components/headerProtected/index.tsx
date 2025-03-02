@@ -20,6 +20,7 @@ export const HeaderProtected = () => {
       <div className="header-text">
         <h2 className="header-title">Bem-vindo ao painel de administrador !</h2>
         <h2 className="header-user-name">{auth.name}</h2>
+        
       </div>
       {/* <div className="header-btn">
         <FontAwesomeIcon

@@ -20,17 +20,22 @@ export const contactReducer = (
     case ContactActionTypes.SUBMIT_CONTACT_SUCCESS:
       return { ...state, loading: false, error: null, success: true }
 
-    case ContactActionTypes.FETCH_CONTACTS_SUCCESS:
+    case ContactActionTypes.FETCH_CONTACTS_SUCCESS: {
+      const contactsData = action.payload?.data || []
       return { 
         ...state, 
         loading: false, 
         error: null,
-        contacts: action.payload
+        contacts: Array.isArray(contactsData) ? contactsData : []
       }
+    }
 
     case ContactActionTypes.SUBMIT_CONTACT_FAILURE:
     case ContactActionTypes.FETCH_CONTACTS_FAILURE:
       return { ...state, loading: false, error: action.payload }
+
+    case ContactActionTypes.RESET_CONTACT_STATE:
+      return initialState
 
     default:
       return state
