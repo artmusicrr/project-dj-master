@@ -5,10 +5,16 @@ import {
   fetchSlidesSuccess,
   fetchSlidesFailure,
 } from "./actions"
+import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
 // Função para buscar slides via API
 const fetchSlidesApi = async () => {
-  const response = await fetch("http://localhost:4000/slides")
+  const user = getUserLocalStorage()
+  const response = await fetch("http://localhost:4000/slides", {
+    headers: {
+      "Authorization": `Bearer ${user?.token}`
+    }
+  })
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
   const data = await response.json() // ⬅️ Armazenar o resultado

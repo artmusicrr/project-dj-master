@@ -1,4 +1,4 @@
-import { GalleryActionTypes, GalleryTypes, UploadImagePayload } from "./types"
+import { GalleryActionTypes, GalleryTypes, UploadImagePayload, DeleteImagePayload } from "./types"
 
 export const fetchGalleryRequest = () => (
   console.log("fetchGalleryRequest", GalleryActionTypes.FETCH_GALLERY_REQUEST),
@@ -29,5 +29,21 @@ export const uploadImageSuccess = (image: GalleryTypes) => ({
 
 export const uploadImageFailure = (error: string) => ({
   type: GalleryActionTypes.UPLOAD_IMAGE_FAILURE,
+  payload: error,
+})
+
+// Novas actions para exclusão de imagem
+export const deleteImageRequest = (payload: DeleteImagePayload) => ({
+  type: GalleryActionTypes.DELETE_IMAGE_REQUEST,
+  payload,
+})
+
+export const deleteImageSuccess = (imageId: string) => ({
+  type: GalleryActionTypes.DELETE_IMAGE_SUCCESS,
+  payload: imageId,
+})
+
+export const deleteImageFailure = (error: string) => ({
+  type: GalleryActionTypes.DELETE_IMAGE_FAILURE,
   payload: error,
 })

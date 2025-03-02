@@ -17,26 +17,47 @@ export const galleryReducer = (
 ): GalleryState => {
   switch (action.type) {
     case GalleryActionTypes.FETCH_GALLERY_REQUEST:
-
     case GalleryActionTypes.UPLOAD_IMAGE_REQUEST:
+    case GalleryActionTypes.DELETE_IMAGE_REQUEST:
       return { ...state, loading: true, error: null }
 
-
     case GalleryActionTypes.FETCH_GALLERY_SUCCESS:
-      return { ...state, loading: false, images: action.payload, error: null }
-
+      return { 
+        ...state, 
+        loading: false, 
+        images: Array.isArray(action.payload) ? action.payload : [], 
+        error: null 
+      }
 
     case GalleryActionTypes.UPLOAD_IMAGE_SUCCESS:
       return {
         ...state,
         loading: false,
-        images: [...state.images, action.payload],
+        images: Array.isArray(state.images) 
+          ? [...state.images, action.payload]
+          : [action.payload],
         error: null,
       }
+      
+    case GalleryActionTypes.DELETE_IMAGE_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        images: Array.isArray(state.images) 
+          ? state.images.filter(img => {
+              if (typeof img === 'string') {
+                return img !== action.payload
+              }
+              return img.id !== action.payload && img.id_image !== action.payload
+            })
+          : [],
+        error: null,
+      }
+    }
 
     case GalleryActionTypes.FETCH_GALLERY_FAILURE:
     case GalleryActionTypes.UPLOAD_IMAGE_FAILURE:
-
+    case GalleryActionTypes.DELETE_IMAGE_FAILURE:
       return { ...state, loading: false, error: action.payload }
 
     default:

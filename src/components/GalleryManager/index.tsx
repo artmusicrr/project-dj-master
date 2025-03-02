@@ -1,19 +1,32 @@
-import React, { useState } from "react"
-import { Card, Form, Upload, Input, Button, message } from "antd"
-import { UploadOutlined } from "@ant-design/icons"
+import React, { useState, useEffect } from "react"
+import { Card, Form, Upload, Input, Button, message, List, Popconfirm, Modal, Table } from "antd"
+import { UploadOutlined, DeleteOutlined, FormOutlined } from "@ant-design/icons"
 import { useDispatch, useSelector } from "react-redux"
-import { uploadImageRequest } from "../../store/gallery/actions"
+import { uploadImageRequest, fetchGalleryRequest, deleteImageRequest } from "../../store/gallery/actions"
+import { fetchContactsRequest } from "../../store/contact/actions"
 import { RootState } from "../../store"
+import { GalleryTypes } from "../../store/gallery/types"
 import "./styles.css"
 
 const GalleryManager: React.FC = () => {
   const [fileList, setFileList] = useState<any[]>([])
   const [description, setDescription] = useState("")
   const [uploading, setUploading] = useState(false)
+  const [deleting, setDeleting] = useState<string | null>(null)
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
   
-  // Monitorando o estado de erro da galeria
-  const { error, loading } = useSelector((state: RootState) => state.gallery.gallery)
+  const { error, loading, images: galleryImages } = useSelector((state: RootState) => state.gallery.gallery)
+  const { contacts = [] } = useSelector((state: RootState) => state.contact)
+
+  console.log('contacts==============>:', contacts)
+
+  console.log('contacts:', contacts);
+console.log('É um array?', Array.isArray(contacts));
+
+  useEffect(() => {
+    dispatch(fetchGalleryRequest())
+  }, [dispatch])
 
   const handleUpload = async () => {
     if (fileList.length === 0) {
@@ -24,17 +37,10 @@ const GalleryManager: React.FC = () => {
     try {
       setUploading(true)
       
-      // Garantindo que temos um arquivo válido
       const file = fileList[0]?.originFileObj
       if (!file || !(file instanceof File)) {
         throw new Error("Arquivo inválido")
       }
-
-      console.log('Preparando para enviar arquivo:', {
-        name: file.name,
-        size: file.size,
-        type: file.type
-      })
 
       dispatch(
         uploadImageRequest({
@@ -43,7 +49,6 @@ const GalleryManager: React.FC = () => {
         })
       )
 
-      // Aguardando um pequeno delay para verificar se houve erro
       await new Promise(resolve => setTimeout(resolve, 1000))
       
       if (error) {
@@ -53,6 +58,8 @@ const GalleryManager: React.FC = () => {
       message.success("Imagem enviada com sucesso!")
       setFileList([])
       setDescription("")
+      
+      dispatch(fetchGalleryRequest())
     } catch (err) {
       console.error('Erro no upload:', err)
       message.error(err instanceof Error ? err.message : "Erro ao enviar imagem")
@@ -61,23 +68,67 @@ const GalleryManager: React.FC = () => {
     }
   }
 
+  const getImageUrl = (image: GalleryTypes | string): string => {
+    if (!image) return '';
+    if (typeof image === 'string') {
+      return `http://localhost:4000${image}`;
+    }
+    return `http://localhost:4000${image.image_url || image.src || ''}`;
+  }
+  
+  const getImageId = (image: GalleryTypes | string): string => {
+    if (!image) return '';
+    if (typeof image === 'string') {
+      return image;
+    }
+    return image.id || image.id_image || '';
+  }
+
+  const handleDelete = async (image: GalleryTypes | string) => {
+    try {
+      const imageUrl = getImageUrl(image);
+      const imageId = getImageId(image);
+      
+      setDeleting(imageId);
+      
+      const pathParts = imageUrl.split('/');
+      const filename = pathParts[pathParts.length - 1];
+      
+      if (!filename) {
+        throw new Error("Nome do arquivo não encontrado");
+      }
+      
+      console.log(`Solicitando exclusão da imagem: ${filename}`);
+      
+      dispatch(deleteImageRequest({
+        imageId: imageId,
+        filename: filename
+      }));
+      
+      message.success("Imagem deletada com sucesso!");
+      
+      setTimeout(() => {
+        dispatch(fetchGalleryRequest());
+      }, 500);
+      
+    } catch (err) {
+      console.error('Erro ao deletar imagem:', err);
+      message.error("Erro ao deletar imagem");
+    } finally {
+      setDeleting(null);
+    }
+  }
+
   const uploadProps = {
     onRemove: () => {
       setFileList([])
     },
     beforeUpload: (file: File) => {
-      // Validando o tipo do arquivo
       const isImage = file.type.startsWith('image/')
       if (!isImage) {
         message.error('Você só pode fazer upload de imagens!')
         return false
       }
-      
-      console.log('Arquivo selecionado:', {
-        name: file.name,
-        size: file.size,
-        type: file.type
-      })
       
       setFileList([{
         originFileObj: file,
@@ -85,10 +136,58 @@ const GalleryManager: React.FC = () => {
         status: 'done',
         url: URL.createObjectURL(file),
       }])
-      return false // Prevent upload
+      return false
     },
     fileList,
   }
+
+  const showModal = () => {
+    dispatch(fetchContactsRequest());
+    setIsModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const columns = [
+    {
+      title: 'Nome',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Telefone',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+    },
+    {
+      title: 'Local do Evento',
+      dataIndex: 'event_location',
+      key: 'event_location',
+    },
+    {
+      title: 'Data do Evento',
+      dataIndex: 'event_date',
+      key: 'event_date',
+      render: (text: string) => new Date(text).toLocaleDateString('pt-BR'),
+    },
+    {
+      title: 'Tipo de Evento',
+      dataIndex: 'event_type',
+      key: 'event_type',
+    },
+    {
+      title: 'Mensagem',
+      dataIndex: 'message',
+      key: 'message',
+    },
+  ];
 
   return (
     <Card title="Gerenciamento da Galeria" className="gallery-manager-card">
@@ -117,7 +216,80 @@ const GalleryManager: React.FC = () => {
             {uploading ? 'Enviando...' : 'Enviar para Galeria'}
           </Button>
         </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            icon={<FormOutlined />}
+            onClick={showModal}
+            style={{ marginTop: '10px' }}
+          >
+            Ver Formulários de Contato
+          </Button>
+        </Form.Item>
       </Form>
+      
+      <div className="gallery-image-list">
+        <h3>Imagens na Galeria</h3>
+        
+        {Array.isArray(galleryImages) && galleryImages.length > 0 ? (
+          <List
+            grid={{ 
+              gutter: 8,
+              xs: 2,
+              sm: 3,
+              md: 4,
+              lg: 4,
+              xl: 4,
+              xxl: 4
+            }}
+            dataSource={galleryImages}
+            renderItem={(image) => (
+              <List.Item className="gallery-list-item">
+                <div className="gallery-list-item-content">
+                  <img 
+                    src={getImageUrl(image)} 
+                    alt="Gallery Thumbnail" 
+                  />
+                  <Popconfirm
+                    title="Tem certeza que deseja excluir esta imagem?"
+                    onConfirm={() => handleDelete(image)}
+                    okText="Sim"
+                    cancelText="Não"
+                  >
+                    <Button 
+                      type="primary" 
+                      danger
+                      icon={<DeleteOutlined />} 
+                      loading={deleting === getImageId(image)}
+                      className="delete-button"
+                    >
+                      Excluir
+                    </Button>
+                  </Popconfirm>
+                </div>
+              </List.Item>
+            )}
+          />
+        ) : (
+          <p>Nenhuma imagem na galeria.</p>
+        )}
+      </div>
+
+      <Modal
+        title="Formulários de Contato"
+        open={isModalVisible}
+        onCancel={handleModalCancel}
+        width={1200}
+        footer={null}
+      >
+        <Table
+          dataSource={contacts}
+          columns={columns}
+          scroll={{ x: true }}
+          rowKey="id"
+        />
+      </Modal>
     </Card>
   )
 }

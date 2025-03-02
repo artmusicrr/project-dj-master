@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { SlideData } from "../types/typesAdm"
+import { getUserLocalStorage } from "../contexts/AuthProvider/util"
 
 const useSlideData = () => {
   const [slideData, setSlideData] = useState<SlideData>({
@@ -58,7 +59,12 @@ const useSlideData = () => {
   useEffect(() => {
     const fetchSlideData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/title") // Substitua pela sua API
+        const user = getUserLocalStorage()
+        const response = await fetch("http://localhost:4000/title", {
+          headers: {
+            "Authorization": `Bearer ${user?.token}`
+          }
+        })
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }
