@@ -65,6 +65,11 @@ header a img {
   width: 200px;
 }
 
+/* Hide menu button by default on large screens */
+.menu-btn {
+  display: none;
+}
+
 @media (max-width: 1040px) {
   header {
     padding: 12px 20px;
@@ -111,7 +116,9 @@ header a img {
     height: 5px;
   }
 
+  /* Only show menu button on mobile */
   .menu-btn {
+    display: block;
     background-image: url('/public/assets/hamburger.png');
     background-repeat: no-repeat;
     background-size: 30px;
