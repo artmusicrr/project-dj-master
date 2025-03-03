@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Form, Input, Select, Button, Tooltip, Card, Row, Col } from "antd"
+import { Form, Input, Select, Button, Tooltip, Card, Row, Col, message } from "antd"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { fetchSlidesRequest } from "../../store/slides/actions"
@@ -98,7 +98,7 @@ const SlideControlPanel: React.FC = () => {
   const handleSave = async () => {
     try {
       if (!idSelected || !querySelected) {
-        alert("Por favor, selecione um slide e um campo de texto.")
+        message.error("Por favor, selecione um slide e um campo de texto.")
         return
       }
 
@@ -143,12 +143,22 @@ const SlideControlPanel: React.FC = () => {
       }
 
       await updateText(querySelected, idSelected, updateData)
-      alert("Conteúdo salvo com sucesso!")
+      message.success({
+        content: "Conteúdo salvo com sucesso!",
+        style: {
+          marginTop: '20vh',
+        },
+      })
       dispatch(fetchSlidesRequest())
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Error:", error.message)
-        alert(`Falha ao salvar o conteúdo: ${error.message}`)
+        message.error({
+          content: `Falha ao salvar o conteúdo: ${error.message}`,
+          style: {
+            marginTop: '20vh',
+          },
+        })
       }
     }
   }
