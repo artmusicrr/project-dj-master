@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
+import "./styles.css"
 
 interface CustomTextAreaProps {
   value: string
@@ -12,21 +13,38 @@ interface CustomTextAreaProps {
 const CustomTextArea: React.FC<CustomTextAreaProps> = ({
   value,
   onChange,
-  color,
-  fontSize,
-  fontWeight,
-  fontFamily,
+  color = "#000000",
+  fontSize = "16px",
+  fontWeight = "normal",
+  fontFamily = "Arial",
 }) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.value = value
+    }
+  }, [value])
+
   return (
     <textarea
+      ref={textareaRef}
       value={value}
       onChange={onChange}
       placeholder="Digite seu texto aqui..."
+      className="custom-textarea"
       style={{
-        color: color,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        fontFamily: fontFamily,
+        color,
+        fontSize,
+        fontWeight,
+        fontFamily,
+        width: "100%",
+        minHeight: "150px",
+        padding: "12px",
+        border: "1px solid #d9d9d9",
+        borderRadius: "4px",
+        resize: "vertical",
+        backgroundColor: "#ffffff",
       }}
     />
   )

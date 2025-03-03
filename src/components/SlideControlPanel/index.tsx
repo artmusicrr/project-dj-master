@@ -25,10 +25,9 @@ const SlideControlPanel: React.FC = () => {
   const [fontFamily, setFontFamily] = useState<string>("Arial")
   const [newImage, setNewImage] = useState<File | null>(null)
   const [slides, setSlides] = useState<Slide[]>([])
-  const slideData = useSlideData()
   const dispatch = useDispatch()
 
-  const { slides: slidesRedux } = useSelector(
+  const { slides: slidesRedux, loading } = useSelector(
     (state: RootState) => state.slides
   )
 
@@ -38,7 +37,7 @@ const SlideControlPanel: React.FC = () => {
 
   useEffect(() => {
     if (slidesRedux) {
-      setSlides(slidesRedux.slides)
+      setSlides(slidesRedux)
     }
   }, [slidesRedux])
 
@@ -52,39 +51,49 @@ const SlideControlPanel: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (idSelected && querySelected) {
-      const selectedSlide = slideData[idSelected]
+    if (idSelected && querySelected && slides) {
+      const selectedSlide = slides.find(slide => slide.id.toString() === idSelected)
       if (selectedSlide) {
         switch (querySelected) {
           case "update-title":
             setTextAreaValue(selectedSlide.title || "")
             setColor(selectedSlide.color_title || "#000000")
-            setFontSize(Number(selectedSlide.font_size_title) || 16)
+            setFontSize(selectedSlide.font_size_title || 16)
             setFontWeight(selectedSlide.font_weight_title || "normal")
             setFontFamily(selectedSlide.font_family_title || "Arial")
             break
           case "update-sub-title":
             setTextAreaValue(selectedSlide.sub_title || "")
             setColor(selectedSlide.color_sub_title || "#000000")
-            setFontSize(Number(selectedSlide.font_size_sub_title) || 16)
+            setFontSize(selectedSlide.font_size_sub_title || 16)
             setFontWeight(selectedSlide.font_weight_sub_title || "normal")
             setFontFamily(selectedSlide.font_family_sub_title || "Arial")
             break
           case "update-text":
             setTextAreaValue(selectedSlide.text || "")
             setColor(selectedSlide.color_text || "#000000")
-            setFontSize(Number(selectedSlide.font_size_text) || 16)
+            setFontSize(selectedSlide.font_size_text || 16)
             setFontWeight(selectedSlide.font_weight_text || "normal")
             setFontFamily(selectedSlide.font_family_text || "Arial")
+            break
+          case "update-any-text":
+            setTextAreaValue(selectedSlide.any_text || "")
+            setColor(selectedSlide.color_any_text || "#000000")
+            setFontSize(selectedSlide.font_size_any_text || 16)
+            setFontWeight(selectedSlide.font_weight_any_text || "normal")
+            setFontFamily(selectedSlide.font_family_any_text || "Arial")
             break
           default:
             setTextAreaValue("")
             setColor("#000000")
+            setFontSize(16)
+            setFontWeight("normal")
+            setFontFamily("Arial")
             break
         }
       }
     }
-  }, [idSelected, querySelected, slideData])
+  }, [idSelected, querySelected, slides])
 
   const handleSave = async () => {
     try {
