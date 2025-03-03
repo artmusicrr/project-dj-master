@@ -17,10 +17,15 @@ export const slidesReducer = (
 ): SlidesState => {
   switch (action.type) {
     case SlidesActionTypes.FETCH_SLIDES_REQUEST:
-      return { ...state, loading: true, error: null, slides: [] }
+      return { ...state, loading: true, error: null }
 
     case SlidesActionTypes.FETCH_SLIDES_SUCCESS:
-      return { ...state, loading: false, slides: action.payload, error: null }
+      return { 
+        ...state, 
+        loading: false, 
+        slides: Array.isArray(action.payload) ? action.payload : [], 
+        error: null 
+      }
 
     case SlidesActionTypes.FETCH_SLIDES_FAILURE:
       return { ...state, loading: false, error: action.payload }

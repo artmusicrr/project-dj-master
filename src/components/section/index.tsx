@@ -21,7 +21,7 @@ const Section: React.FC<ICustonTitle> = () => {
   const [slides, setSlides] = useState<Slide[]>([])
   const dispatch = useDispatch()
 
-  const slidesRedux = useSelector((state: RootState) => state.slides.slides) // Ajuste aqui
+  const slidesRedux = useSelector((state: RootState) => state.slides.slides) // Getting slides array from state
 
   useEffect(() => {
     dispatch(fetchSlidesRequest())
@@ -29,10 +29,8 @@ const Section: React.FC<ICustonTitle> = () => {
 
   useEffect(() => {
     if (slidesRedux) {
-      setSlides(slidesRedux.slides)
-
+      setSlides(slidesRedux)
       setIsLoading(false)
-
     }
   }, [slidesRedux])
 
