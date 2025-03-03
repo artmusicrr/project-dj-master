@@ -29,8 +29,17 @@ export interface SlidesState {
   error: string | null
 }
 
+export interface UpdateSlidePayload {
+  query: string
+  id: string
+  data: Partial<Slide>
+}
+
 export enum SlidesActionTypes {
   FETCH_SLIDES_REQUEST = "FETCH_SLIDES_REQUEST",
   FETCH_SLIDES_SUCCESS = "FETCH_SLIDES_SUCCESS",
   FETCH_SLIDES_FAILURE = "FETCH_SLIDES_FAILURE",
+  UPDATE_SLIDE_REQUEST = "UPDATE_SLIDE_REQUEST",
+  UPDATE_SLIDE_SUCCESS = "UPDATE_SLIDE_SUCCESS",
+  UPDATE_SLIDE_FAILURE = "UPDATE_SLIDE_FAILURE",
 }
