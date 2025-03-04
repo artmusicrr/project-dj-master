@@ -35,7 +35,13 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (formRef.current && !formRef.current.contains(event.target as Node)) {
-        setFormActive(false)
+        // Verifica se o clique foi em um elemento do Material-UI Select
+        const target = event.target as HTMLElement;
+        const isSelectElement = target.closest('.MuiSelect-root, .MuiPopover-root');
+        
+        if (!isSelectElement) {
+          setFormActive(false);
+        }
       }
     }
 

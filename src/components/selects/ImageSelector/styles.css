@@ -2,6 +2,7 @@
   background-color: var(--input-background);
   color: var(--input-text);
   border-color: var(--input-border);
+  transition: all 0.3s ease;
 }
 
 .image-selector.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
@@ -19,12 +20,20 @@
 
 .image-selector .ant-select-arrow {
   color: var(--text-color);
+  opacity: 0.7;
+}
+
+.image-selector .ant-select-clear {
+  background-color: var(--input-background);
+  color: var(--text-color);
+  opacity: 0.7;
 }
 
 /* Dropdown styles */
 .ant-select-dropdown {
   background-color: var(--card-background);
   border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .ant-select-item {

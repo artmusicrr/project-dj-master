@@ -2,22 +2,24 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 100px;
-  left: 400px;
-  background: #ffffff;
+  top: calc(60px + 2rem); /* Header height (60px) + some spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card-background);
   padding: 30px;
   opacity: 1;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   max-width: 550px;
-  width: 100%;
+  width: 90%;
   border-radius: 12px;
+  z-index: 998;
 }
 
 .container-form h1 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
-  color: #1890ff;
+  color: var(--text-color);
   font-weight: 600;
 }
 
@@ -58,8 +60,8 @@
   height: 40px;
   border-radius: 8px;
   border: none;
-  background: #1890ff;
-  color: #fff;
+  background: var(--button-background);
+  color: var(--button-text);
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
@@ -68,13 +70,14 @@
 }
 
 .container-button button:hover {
-  background: #40a9ff;
+  background: var(--primary-color);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
 }
 
 .container-button button:disabled {
-  background: #91caff;
+  opacity: 0.6;
+  background: var(--button-background);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -83,12 +86,30 @@
 .container-message textarea {
   width: 100%;
   min-height: 80px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   padding: 10px;
   font-size: 14px;
   margin-top: 6px;
   resize: vertical;
+  background-color: var(--input-background);
+  color: var(--input-text);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.container-message textarea:hover {
+  border-color: var(--primary-color);
+}
+
+.container-message textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.container-message textarea::placeholder {
+  color: var(--input-placeholder);
+  opacity: 0.7;
 }
 
 .date-select {
@@ -99,40 +120,88 @@
 .date-select input {
   width: 100%;
   height: 32px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   padding: 4px 12px;
   font-size: 14px;
+  background-color: var(--input-background);
+  color: var(--input-text);
+  transition: all 0.3s ease;
+}
+
+/* Estilo para o ícone do calendário dentro do input date */
+.date-select input::-webkit-calendar-picker-indicator {
+  filter: var(--calendar-icon-filter);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.date-select input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 .select {
   width: 100%;
   height: 32px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   padding: 4px 12px;
   font-size: 14px;
   margin-top: 6px;
-  background: #ffffff;
+  background-color: var(--input-background);
+  color: var(--input-text);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.select:hover {
+  border-color: var(--primary-color);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.label-date {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--text-color);
+  gap: 8px; /* Espaçamento entre o label e o input */
+}
+
+.label-date label {
+  color: var(--text-color);
+  white-space: nowrap; /* Evita quebra de linha no texto do label */
+}
+
+.date-select {
+  flex: 1; /* Faz o input ocupar o espaço restante */
+  margin-bottom: 12px;
+}
+
+.date-select input {
+  width: 100%;
+  height: 32px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 14px;
+  background-color: var(--input-background);
+  color: var(--input-text);
+  transition: all 0.3s ease;
 }
 
 .label-date :focus-visible {
   outline: none;
 }
 
-.select {
-  height: 30px;
-  border-radius: 6px;
-  border: none;
-}
-
-.select:focus-visible {
-  outline: none;
-}
-
 .select-container label {
   margin-left: 0px;
   align-items: center;
+  color: var(--text-color);
 }
 
 .label-float {
@@ -144,22 +213,24 @@
 .label-float input {
   width: 100%;
   height: 32px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--input-border);
   outline: none;
   min-width: 180px;
   font-size: 14px;
   transition: all 0.3s ease;
   border-radius: 8px;
   padding: 4px 12px;
-  background: #ffffff;
+  background-color: var(--input-background);
+  color: var(--input-text);
 }
 
 .label-float input:hover {
-  border-color: #40a9ff;
+  border-color: var(--primary-color);
 }
 
 .label-float input:focus {
-  border-bottom: 2px solid #3951b2;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
 }
 
 .label-float input::placeholder {
@@ -175,14 +246,16 @@
   transition: all 0.3s ease-out;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
+  color: var(--text-color);
 }
 
 .label-float input:required:invalid+label {
-  color: red;
+  color: #ff4d4f;
 }
 
 .label-float input:focus:required:invalid {
-  border-bottom: 2px solid red;
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
 }
 
 .label-float input:required:invalid+label:before {
@@ -193,72 +266,9 @@
 .label-float input:not(:placeholder-shown)+label {
   font-size: 13px;
   margin-top: -5px;
-  color: #3951b2;
-}
-
-.label-date {
-  display: flex;
-  flex-direction: column;
-}
-
-.container-form {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
-  padding: 20px;
-  opacity: 1;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-  max-width: 550px;
-  width: 90%;
-  border-radius: 16px;
-  max-height: 100%;
-}
-
-.container-form h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #1890ff;
-  font-weight: 600;
-}
-
-.container-message textarea {
-  min-height: 60px;
-  max-height: 120px;
-}
-
-.mensagem-enviada {
-  width: 350px;
-  height: 30px;
-  top: 0;
-}
-
-.container-message textarea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 340px;
-  margin-top: 8px;
-}
-
-.date-select {
-  flex-direction: column;
-  margin-top: 8px;
-
-  input {
-    width: 100%;
-    height: 36px;
-  }
-}
-
-.select-container label {
-  margin-left: 0px;
-  align-items: center;
+  color: var(--primary-color);
+  background-color: var(--card-background);
+  padding: 0 5px;
 }
 
 .error-message {
@@ -266,4 +276,73 @@
   text-align: center;
   margin-top: 8px;
   font-size: 14px;
+}
+
+.container-message {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-message label {
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+/* Estilos essenciais para o Select do Material-UI */
+.MuiPopover-root .MuiPaper-root {
+  background-color: var(--card-background) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.MuiSelect-select {
+  cursor: pointer !important;
+  color: var(--input-text) !important;
+  background-color: var(--input-background) !important;
+}
+
+.MuiSelect-select:focus {
+  background-color: var(--input-background) !important;
+}
+
+.MuiMenuItem-root {
+  padding: 12px 16px !important;
+  color: var(--input-text) !important;
+  cursor: pointer !important;
+  min-height: 48px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.MuiMenuItem-root:hover,
+.MuiMenuItem-root:focus,
+.MuiMenuItem-root.Mui-focusVisible {
+  background-color: var(--background-color) !important;
+}
+
+.MuiMenuItem-root.Mui-selected {
+  background-color: var(--primary-color) !important;
+  color: var(--button-text) !important;
+}
+
+.MuiMenuItem-root.Mui-selected:hover {
+  background-color: var(--primary-color-hover) !important;
+}
+
+@media (max-width: 768px) {
+  .container-form {
+    width: 95%;
+    padding: 20px;
+    top: calc(60px + 1rem); /* Menor espaçamento em telas menores */
+  }
+
+  .container-inputs {
+    flex-direction: column;
+  }
+
+  .container-left {
+    margin-bottom: 15px;
+  }
+
+  .container-form h1 {
+    font-size: 20px;
+  }
 }
