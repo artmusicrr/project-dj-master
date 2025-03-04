@@ -1,0 +1,41 @@
+.image-selector.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: var(--input-background);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+.image-selector.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: var(--primary-color);
+}
+
+.image-selector.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.image-selector .ant-select-selection-item {
+  color: var(--input-text);
+}
+
+.image-selector .ant-select-arrow {
+  color: var(--text-color);
+}
+
+/* Dropdown styles */
+.ant-select-dropdown {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
+.ant-select-item {
+  color: var(--text-color);
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  color: var(--primary-color);
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+}

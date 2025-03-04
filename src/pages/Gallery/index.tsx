@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
 import ImageModal from "../../components/ImageModal";
-import { HomeOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { fetchGalleryRequest } from "../../store/gallery/actions";
-import type { GalleryTypes } from "../../store/gallery/types";
+import { HeaderPages } from "../../components/headerPages";
 
 const Gallery: React.FC = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const [selectedImage, setSelectedImage] = useState<{ url: string; alt: string } | null>(null);
+    const themeMode = useSelector((state: any) => state.theme.mode);
 
     const { images: galleryImages } = useSelector(
         (state: RootState) => state.gallery.gallery
@@ -23,8 +20,8 @@ const Gallery: React.FC = () => {
     }, [dispatch]);
 
     return (
-        <div className="gallery-container">
-            <h1>Nossa Galeria</h1>
+        <div className="gallery-container" data-theme={themeMode}>
+            <HeaderPages title="Galeria" />
             <div className="gallery-grid">
                 {galleryImages && galleryImages.map((imagePath, index) => (
                     <div
@@ -42,10 +39,6 @@ const Gallery: React.FC = () => {
                         />
                     </div>
                 ))}
-            </div>
-
-            <div className="home-button">
-                <HomeOutlined className="home-icon" onClick={() => navigate("/")} />
             </div>
 
             <ImageModal

@@ -1,19 +1,14 @@
 import React from "react"
-//import { HomeOutlined } from "@ant-design/icons"
-//import { useNavigate } from "react-router-dom"
 import { HeaderPages } from "../../components/headerPages"
-
+import { useSelector } from "react-redux"
+import "./styles.css"
 
 export const Company = () => {
-
-    //const navigate = useNavigate()
+    const themeMode = useSelector((state: any) => state.theme.mode)
 
     return (
-        <div>
+        <div className="company-container" data-theme={themeMode}>
             <HeaderPages title="Empresa" />
-
-
-
         </div>
     )
 }

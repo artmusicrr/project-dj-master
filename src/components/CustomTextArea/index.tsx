@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from "react"
+import React, { TextareaHTMLAttributes } from "react"
 import "./styles.css"
 
-interface CustomTextAreaProps {
-  value: string
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+interface CustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   color?: string
   fontSize?: string
   fontWeight?: string
@@ -11,41 +9,24 @@ interface CustomTextAreaProps {
 }
 
 const CustomTextArea: React.FC<CustomTextAreaProps> = ({
-  value,
-  onChange,
-  color = "#000000",
-  fontSize = "16px",
-  fontWeight = "normal",
-  fontFamily = "Arial",
+  color,
+  fontSize,
+  fontWeight,
+  fontFamily,
+  ...props
 }) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.value = value
-    }
-  }, [value])
-
   return (
     <textarea
-      ref={textareaRef}
-      value={value}
-      onChange={onChange}
-      placeholder="Digite seu texto aqui..."
       className="custom-textarea"
       style={{
-        color,
+        color: color || 'var(--input-text)',
         fontSize,
         fontWeight,
         fontFamily,
-        width: "100%",
-        minHeight: "150px",
-        padding: "12px",
-        border: "1px solid #d9d9d9",
-        borderRadius: "4px",
-        resize: "vertical",
-        backgroundColor: "#ffffff",
+        backgroundColor: 'var(--input-background)',
+        borderColor: 'var(--input-border)'
       }}
+      {...props}
     />
   )
 }

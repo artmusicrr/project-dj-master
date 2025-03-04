@@ -9,7 +9,7 @@ import CustomColorPicker from "../colorPicker"
 import ImageSelector from "../selects/ImageSelector"
 import TextSelector from "../selects/TextSelector"
 import CustomTextArea from "../CustomTextArea"
-import useSlideData from "../../hooks/useSlideData"
+import { useTheme } from "../../contexts/ThemeContext"
 import { fontFamilies, textSelected, imageSelected } from "../../utils/sliderrFormat"
 import "./styles.css"
 
@@ -163,12 +163,25 @@ const SlideControlPanel: React.FC = () => {
     }
   }
 
+  const { toggleTheme } = useTheme()
+  const themeMode = useSelector((state: RootState) => state.theme.mode)
+
   return (
-    <Card title="Painel de Controle dos Slides" className="slide-control-card" variant="outlined">
+    <Card 
+      title="Painel de Controle dos Slides" 
+      className="slide-control-card" 
+      variant="outlined"
+      style={{
+        backgroundColor: 'var(--card-background)',
+        color: 'var(--text-color)'
+      }}
+    >
       <Form layout="vertical">
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Slide">
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Slide</span>}
+            >
               <ImageSelector
                 options={imageSelected}
                 value={idSelected}
@@ -177,7 +190,9 @@ const SlideControlPanel: React.FC = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Campo">
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Campo</span>}
+            >
               <TextSelector
                 options={textSelected}
                 value={querySelected}
@@ -187,7 +202,9 @@ const SlideControlPanel: React.FC = () => {
           </Col>
         </Row>
 
-        <Form.Item label="Digite aqui seu texto">
+        <Form.Item 
+          label={<span style={{ color: 'var(--text-color)' }}>Digite aqui seu texto</span>}
+        >
           <CustomTextArea
             value={textAreaValue}
             onChange={(e) => setTextAreaValue(e.target.value)}
@@ -200,17 +217,33 @@ const SlideControlPanel: React.FC = () => {
 
         <Row gutter={16}>
           <Col span={8}>
-            <Form.Item label="Tamanho da Fonte">
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Tamanho da Fonte</span>}
+            >
               <Input
                 type="number"
                 value={fontSize}
                 onChange={(e) => setFontSize(Number(e.target.value))}
+                style={{
+                  backgroundColor: 'var(--input-background)',
+                  color: 'var(--input-text)',
+                  borderColor: 'var(--input-border)'
+                }}
               />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Peso da Fonte">
-              <Select value={fontWeight} onChange={(value) => setFontWeight(value)}>
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Peso da Fonte</span>}
+            >
+              <Select 
+                value={fontWeight} 
+                onChange={(value) => setFontWeight(value)}
+                style={{
+                  backgroundColor: 'var(--input-background)',
+                  color: 'var(--input-text)'
+                }}
+              >
                 <Option value="normal">Normal</Option>
                 <Option value="bold">Negrito</Option>
                 <Option value="lighter">Mais leve</Option>
@@ -219,8 +252,17 @@ const SlideControlPanel: React.FC = () => {
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Família da Fonte">
-              <Select value={fontFamily} onChange={(value) => setFontFamily(value)}>
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Família da Fonte</span>}
+            >
+              <Select 
+                value={fontFamily} 
+                onChange={(value) => setFontFamily(value)}
+                style={{
+                  backgroundColor: 'var(--input-background)',
+                  color: 'var(--input-text)'
+                }}
+              >
                 {fontFamilies.map((font) => (
                   <Option key={font} value={font}>
                     {font}
@@ -233,7 +275,9 @@ const SlideControlPanel: React.FC = () => {
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Imagem de Fundo">
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Imagem de Fundo</span>}
+            >
               <Input
                 type="file"
                 accept="image/*"
@@ -242,11 +286,18 @@ const SlideControlPanel: React.FC = () => {
                     setNewImage(e.target.files[0])
                   }
                 }}
+                style={{
+                  backgroundColor: 'var(--input-background)',
+                  color: 'var(--input-text)',
+                  borderColor: 'var(--input-border)'
+                }}
               />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Cor do Texto">
+            <Form.Item 
+              label={<span style={{ color: 'var(--text-color)' }}>Cor do Texto</span>}
+            >
               <CustomColorPicker
                 defaultValue={color}
                 onChange={(newColor) => setColor(newColor)}
@@ -256,7 +307,15 @@ const SlideControlPanel: React.FC = () => {
         </Row>
 
         <Form.Item>
-          <Button type="primary" onClick={handleSave}>
+          <Button 
+            type="primary" 
+            onClick={handleSave}
+            style={{
+              backgroundColor: 'var(--button-background)',
+              color: 'var(--button-text)',
+              borderColor: 'var(--border-color)'
+            }}
+          >
             Salvar
           </Button>
         </Form.Item>

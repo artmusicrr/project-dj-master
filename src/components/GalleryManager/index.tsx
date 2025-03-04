@@ -6,6 +6,7 @@ import { uploadImageRequest, fetchGalleryRequest, deleteImageRequest } from "../
 import { fetchContactsRequest } from "../../store/contact/actions"
 import { RootState } from "../../store"
 import { GalleryTypes } from "../../store/gallery/types"
+import { useTheme } from "../../contexts/ThemeContext"
 import "./styles.css"
 
 const GalleryManager: React.FC = () => {
@@ -23,6 +24,9 @@ const GalleryManager: React.FC = () => {
     const contactState = state.contact;
     return Array.isArray(contactState.contacts) ? contactState.contacts : [];
   });
+
+  const { toggleTheme } = useTheme()
+  const themeMode = useSelector((state: RootState) => state.theme.mode)
 
   useEffect(() => {
     dispatch(fetchGalleryRequest())
@@ -187,19 +191,45 @@ const GalleryManager: React.FC = () => {
   ];
 
   return (
-    <Card title="Gerenciamento da Galeria" className="gallery-manager-card" variant="outlined">
+    <Card 
+      title="Gerenciamento da Galeria" 
+      className="gallery-manager-card" 
+      variant="outlined"
+      style={{
+        backgroundColor: 'var(--card-background)',
+        color: 'var(--text-color)'
+      }}
+    >
       <Form layout="vertical">
-        <Form.Item label="Enviar Nova Imagem">
+        <Form.Item 
+          label={<span style={{ color: 'var(--text-color)' }}>Enviar Nova Imagem</span>}
+        >
           <Upload {...uploadProps} maxCount={1} accept="image/*">
-            <Button icon={<UploadOutlined />}>Selecionar Imagem</Button>
+            <Button 
+              icon={<UploadOutlined />}
+              style={{
+                backgroundColor: 'var(--button-background)',
+                color: 'var(--button-text)',
+                borderColor: 'var(--border-color)'
+              }}
+            >
+              Selecionar Imagem
+            </Button>
           </Upload>
         </Form.Item>
 
-        <Form.Item label="Descrição da Imagem">
+        <Form.Item 
+          label={<span style={{ color: 'var(--text-color)' }}>Descrição da Imagem</span>}
+        >
           <Input
             placeholder="Digite uma descrição para a imagem"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            style={{
+              backgroundColor: 'var(--input-background)',
+              color: 'var(--input-text)',
+              borderColor: 'var(--input-border)'
+            }}
           />
         </Form.Item>
 
@@ -209,6 +239,11 @@ const GalleryManager: React.FC = () => {
             onClick={handleUpload}
             disabled={fileList.length === 0 || uploading}
             loading={uploading}
+            style={{
+              backgroundColor: 'var(--button-background)',
+              color: 'var(--button-text)',
+              borderColor: 'var(--border-color)'
+            }}
           >
             {uploading ? 'Enviando...' : 'Enviar para Galeria'}
           </Button>
@@ -219,7 +254,12 @@ const GalleryManager: React.FC = () => {
             type="primary"
             icon={<FormOutlined />}
             onClick={showModal}
-            style={{ marginTop: '10px' }}
+            style={{
+              marginTop: '10px',
+              backgroundColor: 'var(--button-background)',
+              color: 'var(--button-text)',
+              borderColor: 'var(--border-color)'
+            }}
           >
             Ver Formulários de Contato
           </Button>
@@ -269,7 +309,7 @@ const GalleryManager: React.FC = () => {
             )}
           />
         ) : (
-          <p>Nenhuma imagem na galeria.</p>
+          <p style={{ color: 'var(--text-color)' }}>Nenhuma imagem na galeria.</p>
         )}
       </div>
 
