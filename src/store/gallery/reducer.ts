@@ -22,34 +22,34 @@ export const galleryReducer = (
       return { ...state, loading: true, error: null }
 
     case GalleryActionTypes.FETCH_GALLERY_SUCCESS:
-      return { 
-        ...state, 
-        loading: false, 
-        images: Array.isArray(action.payload) ? action.payload : [], 
-        error: null 
+      return {
+        ...state,
+        loading: false,
+        images: Array.isArray(action.payload) ? action.payload : [],
+        error: null
       }
 
     case GalleryActionTypes.UPLOAD_IMAGE_SUCCESS:
       return {
         ...state,
         loading: false,
-        images: Array.isArray(state.images) 
+        images: Array.isArray(state.images)
           ? [...state.images, action.payload]
           : [action.payload],
         error: null,
       }
-      
+
     case GalleryActionTypes.DELETE_IMAGE_SUCCESS: {
       return {
         ...state,
         loading: false,
-        images: Array.isArray(state.images) 
+        images: Array.isArray(state.images)
           ? state.images.filter(img => {
-              if (typeof img === 'string') {
-                return img !== action.payload
-              }
-              return img.id !== action.payload && img.id_image !== action.payload
-            })
+            if (typeof img === 'string') {
+              return img !== action.payload
+            }
+            return img.id !== action.payload && img.id_image !== action.payload
+          })
           : [],
         error: null,
       }
