@@ -1,58 +1,36 @@
-import React, { useState } from "react"
-import { SketchPicker, ColorResult } from "react-color"
-import { DownOutlined } from "@ant-design/icons"
-import { Space, Popover } from "antd"
-import { ICustonTitle } from "../../types/typesCustnTitle"
+import React from "react"
+import { ColorPicker } from "antd"
+import type { Color } from "antd/es/color-picker"
 
-const CustomColorPicker: React.FC<ICustonTitle> = ({
-  defaultValue,
-  showText,
+interface CustomColorPickerProps {
+  defaultValue?: string
+  onChange?: (color: string) => void
+}
+
+const CustomColorPicker: React.FC<CustomColorPickerProps> = ({
+  defaultValue = "#1677ff",
   onChange,
 }) => {
-  const [color, setColor] = useState(defaultValue || "#1677ff")
-  const [open, setOpen] = useState(false)
-
-  const handleChangeComplete = (color: ColorResult) => {
-    const selectedColor = color.hex
-    setColor(selectedColor)
+  const handleColorChange = (_: Color, hexString: string) => {
     if (onChange) {
-      onChange(selectedColor)
+      onChange(hexString)
     }
   }
 
   return (
-    <Popover
-      content={
-        <SketchPicker color={color} onChangeComplete={handleChangeComplete} />
-      }
-      trigger="click"
-      open={open}
-      onOpenChange={setOpen}
-    >
-      <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-        <div
-          style={{
-            width: "36px",
-            height: "14px",
-            borderRadius: "2px",
-            backgroundColor: color,
-            marginRight: "8px",
-          }}
-        />
-        {typeof showText === "function" ? (
-          showText(color)
-        ) : (
-          <span>{color}</span>
-        )}
-        <DownOutlined
-          rotate={open ? 180 : 0}
-          style={{
-            color: "rgba(0, 0, 0, 0.25)",
-            marginLeft: "8px",
-          }}
-        />
-      </div>
-    </Popover>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <ColorPicker
+        defaultValue={defaultValue}
+        onChange={handleColorChange}
+        style={{
+          backgroundColor: 'var(--input-background)',
+          borderColor: 'var(--input-border)'
+        }}
+      />
+      <span style={{ color: 'var(--text-color)' }}>
+        Cor selecionada: {defaultValue}
+      </span>
+    </div>
   )
 }
 

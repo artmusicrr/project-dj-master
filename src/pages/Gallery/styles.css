@@ -3,12 +3,9 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: linear-gradient(135deg, #e8f4f8 0%, #b3d4e6 100%);
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: var(--background-color);
     position: relative;
-
+    transition: background-color 0.3s ease;
 }
 
 html {
@@ -19,7 +16,7 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
+    padding: 80px 2rem 2rem;  /* Ajustado o padding-top para o header fixo */
     max-width: 1200px;
     margin: 0 auto;
     min-height: 100vh;
@@ -60,11 +57,12 @@ html {
 .gallery-item {
     position: relative;
     overflow: hidden;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     transition: transform 0.3s ease;
     aspect-ratio: 1;
     height: 250px;
+    background-color: var(--card-background);
 }
 
 .gallery-item:hover {

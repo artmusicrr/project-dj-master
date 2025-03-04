@@ -3,6 +3,8 @@
   height: 100%;
   margin: 5px;
   padding: 10px;
+  background-color: var(--card-background);
+  color: var(--text-color);
 }
 
 .slide-control-card .ant-form-item {
@@ -12,9 +14,11 @@
 .slide-control-card .ant-card-head {
   min-height: 40px;
   padding: 0 12px;
-  color: #1890ff;
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 16px;
+  background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .slide-control-card textarea {
@@ -22,31 +26,79 @@
   resize: vertical;
   border-radius: 4px;
   padding: 8px;
+  background-color: var(--input-background);
+  color: var(--input-text);
+  border-color: var(--input-border);
 }
 
 .slide-control-card .ant-select {
   width: 100%;
 }
 
+.slide-control-card .ant-select-selector {
+  background-color: var(--input-background) !important;
+  color: var(--input-text) !important;
+  border-color: var(--input-border) !important;
+}
+
+.slide-control-card .ant-select-selection-item {
+  color: var(--input-text) !important;
+}
+
 .slide-control-card .ant-input[type="file"] {
   padding: 4px 8px;
+  background-color: var(--input-background);
+  color: var(--input-text);
+  border-color: var(--input-border);
 }
 
 .slide-control-card .ant-btn-primary {
   width: 100%;
   margin-top: 8px;
+  background-color: var(--button-background);
+  color: var(--button-text);
+  border-color: var(--border-color);
 }
 
 .slide-control-card .select-label {
   background: transparent;
   border: none;
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--text-color);
 }
 
 .slide-control-card .ant-form-item-label > label {
-  color: rgba(0, 0, 0, 0.85);
+  color: var(--text-color) !important;
 }
 
 .slide-control-card .ant-input-number {
   width: 100%;
+  background-color: var(--input-background);
+  border-color: var(--input-border);
+}
+
+.slide-control-card .ant-input-number-input {
+  color: var(--input-text);
+}
+
+.slide-control-card .ant-input {
+  background-color: var(--input-background);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+.slide-control-card .ant-select-dropdown {
+  background-color: var(--card-background);
+}
+
+.slide-control-card .ant-select-item {
+  color: var(--text-color);
+}
+
+.slide-control-card .ant-select-item-option-selected {
+  background-color: var(--primary-color);
+  color: var(--button-text);
+}
+
+.slide-control-card .ant-select-item-option-active {
+  background-color: var(--background-color);
 }

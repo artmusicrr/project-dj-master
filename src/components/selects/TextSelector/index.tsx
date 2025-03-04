@@ -1,35 +1,38 @@
 import React from "react"
+import { Select } from "antd"
+import "./styles.css"
 
 interface TextSelectorProps {
   options: { [key: string]: string }
   value: string
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  onChange: (e: { target: { value: string } }) => void
 }
 
-const TextSelector: React.FC<TextSelectorProps> = ({
-  options,
-  value,
-  onChange,
-}) => {
+const TextSelector: React.FC<TextSelectorProps> = ({ options, value, onChange }) => {
   return (
-    <div className="select-label">
-      <label className="texto-image">
-        Selecione qual é o campo de texto que deseja alterar:
-      </label>
-      <select
-        className="select"
-        name="textEvent"
-        id="textEvent"
-        value={value}
-        onChange={onChange}
-      >
-        {Object.entries(options).map(([key, value]) => (
-          <option key={key} value={key}>
-            {value}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Select
+      className="text-selector"
+      value={value}
+      onChange={(newValue) => onChange({ target: { value: newValue } })}
+      style={{
+        width: "100%",
+        backgroundColor: "var(--input-background)",
+        color: "var(--input-text)"
+      }}
+    >
+      {Object.entries(options).map(([key, label]) => (
+        <Select.Option 
+          key={key} 
+          value={key}
+          style={{
+            backgroundColor: "var(--input-background)",
+            color: "var(--input-text)"
+          }}
+        >
+          {label}
+        </Select.Option>
+      ))}
+    </Select>
   )
 }
 

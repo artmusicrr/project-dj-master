@@ -6,3 +6,17 @@
     align-items: center;
     justify-content: center;
 }
+
+/* Removendo estilo antigo do home-icon que não é mais necessário */
+.company-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 2rem 2rem;  /* Ajustado o padding-top para o header fixo */
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
