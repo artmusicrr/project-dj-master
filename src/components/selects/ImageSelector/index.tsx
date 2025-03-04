@@ -1,35 +1,38 @@
 import React from "react"
+import { Select } from "antd"
+import "./styles.css"
 
 interface ImageSelectorProps {
   options: { [key: string]: string }
   value: string
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  onChange: (e: { target: { value: string } }) => void
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({
-  options,
-  value,
-  onChange,
-}) => {
+const ImageSelector: React.FC<ImageSelectorProps> = ({ options, value, onChange }) => {
   return (
-    <div className="select-label">
-      <label className="texto-image">
-        Selecione em qual slide de imagem da home você deseja alterar o texto:
-      </label>
-      <select
-        className="select"
-        name="eventoid"
-        id="eventoid"
-        value={value}
-        onChange={onChange}
-      >
-        {Object.entries(options).map(([key, value]) => (
-          <option key={key} value={key}>
-            {value}
-          </option>
-        ))}
-      </select>
-    </div>
+    <Select
+      className="image-selector"
+      value={value}
+      onChange={(newValue) => onChange({ target: { value: newValue } })}
+      style={{
+        width: "100%",
+        backgroundColor: "var(--input-background)",
+        color: "var(--input-text)"
+      }}
+    >
+      {Object.entries(options).map(([key, label]) => (
+        <Select.Option 
+          key={key} 
+          value={key}
+          style={{
+            backgroundColor: "var(--input-background)",
+            color: "var(--input-text)"
+          }}
+        >
+          {label}
+        </Select.Option>
+      ))}
+    </Select>
   )
 }
 
