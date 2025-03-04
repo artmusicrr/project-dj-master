@@ -1,10 +1,10 @@
 import React from "react"
 import { useAuth } from "../../contexts/AuthProvider/useAuth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
+import { faHome } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
-import { HeaderPages } from "../../components/headerPages"
+import ThemeToggle from "../ThemeToggle"
 
 export const HeaderProtected = () => {
   const auth = useAuth()
@@ -14,21 +14,27 @@ export const HeaderProtected = () => {
     auth.logout()
     navigate("/")
   }
+
+  function handleNavigateHome() {
+    navigate("/")
+  }
+
   return (
     <div className="header">
-      <HeaderPages title="" />
-      <div className="header-text">
-        <h2 className="header-title">Bem-vindo ao painel de administrador !</h2>
-        <h2 className="header-user-name">{auth.name}</h2>
-        
-      </div>
-      {/* <div className="header-btn">
+      <div className="home-icon-container">
         <FontAwesomeIcon
-          icon={faSignOutAlt}
-          onClick={handleLogout}
-          className="icon"
+          icon={faHome}
+          onClick={handleNavigateHome}
+          className="home-icon"
         />
-      </div> */}
+      </div>
+      <div className="header-text">
+        <h2 className="header-title">Painel de Administração</h2>
+        <h2 className="header-user-name">Olá, {auth.name}!</h2>
+      </div>
+      <div className="theme-toggle-container">
+        <ThemeToggle />
+      </div>
     </div>
   )
 }

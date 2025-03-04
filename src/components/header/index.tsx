@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import Form from "../form"
+import ThemeToggle from "../ThemeToggle"
 
 const logo = `${process.env.PUBLIC_URL}/assets/DJMASTER.png`
 const hamburgerIcon = `${process.env.PUBLIC_URL}/assets/hamburger.png`
@@ -61,9 +62,15 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <a onClick={() => handleNavigate("/")} className="brand">
+      <a href="/" onClick={(e) => {
+        e.preventDefault();
+        handleNavigate("/");
+      }} className="brand">
         <img src={logo} alt="Logo DJ Master" />
       </a>
+      <div className="theme-toggle-container" style={{ marginLeft: 'auto', marginRight: '15px' }}>
+        <ThemeToggle />
+      </div>
       <div
         className="menu-btn"
         style={menuBtnStyle}
