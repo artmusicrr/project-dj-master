@@ -13,6 +13,8 @@
   --header-background: rgba(248, 249, 250, 0.8);
   --header-text: #333333;
   --header-icon: #333333;
+  --calendar-icon-filter: none; /* Mantém a cor original no tema light */
+  --primary-color-hover: #0056b3;
 }
 
 :root[data-theme="dark"] {
@@ -21,8 +23,8 @@
   --primary-color: #0d6efd;
   --primary-color-rgb: 13, 110, 253;
   --card-background: #1e1e1e;
-  --input-background: #1e1e1e;
-  --input-text: #ffffff;
+  --input-background: #2c2c2c;
+  --input-text: #e0e0e0;
   --input-border: #343a40;
   --input-placeholder: #adb5bd;
   --button-background: #0d6efd;
@@ -30,4 +32,21 @@
   --header-background: rgba(0, 0, 0, 0.8);
   --header-text: #ffffff;
   --header-icon: #ffffff;
+  --calendar-icon-filter: invert(1); /* Inverte a cor do ícone para branco no tema dark */
+  --primary-color-hover: #0d47a1;
+}
+
+/* Correção para autofill em modo dark */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--input-text) !important;
+  -webkit-box-shadow: 0 0 0 30px var(--input-background) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.MuiInputBase-input.MuiOutlinedInput-input:-webkit-autofill {
+  -webkit-text-fill-color: var(--input-text) !important;
+  -webkit-box-shadow: 0 0 0 30px var(--input-background) inset !important;
 }
