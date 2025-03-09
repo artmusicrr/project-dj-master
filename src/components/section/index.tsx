@@ -39,7 +39,7 @@ const Section: React.FC<ICustonTitle> = () => {
       setActiveContentIndex((prevIndex) =>
         prevIndex === slides.length - 1 ? 0 : prevIndex + 1,
       )
-    }, 1000000)
+    }, 10000)
 
     return () => clearInterval(intervalId)
   }, [slides.length])
