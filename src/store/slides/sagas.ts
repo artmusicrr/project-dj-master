@@ -7,20 +7,20 @@ import {
 } from "./actions"
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
-const API_BASE_URL = process.env.REACT_APP_API_PROD;
-console.log("API_BASE_URL:", API_BASE_URL);
+const API_BASE_URL = process.env.REACT_APP_API_PROD
+console.log("API_BASE_URL === title:", API_BASE_URL)
 
 // Função para buscar slides via API
 const fetchSlidesApi = async () => {
-  const user = getUserLocalStorage();
+  const user = getUserLocalStorage()
   const response = await fetch(`${API_BASE_URL}/title`, {
     headers: {
-      "Authorization": `Bearer ${user?.token}`
-    }
-  });
-  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-  
-  const data = await response.json();
+      Authorization: `Bearer ${user?.token}`,
+    },
+  })
+  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+
+  const data = await response.json()
   // Mapear e ordenar os slides por ID
   const mappedSlides = data.map((item: any) => ({
     id: item.id,
@@ -45,15 +45,15 @@ const fetchSlidesApi = async () => {
     font_weight_any_text: item.font_weight_any_text || "normal",
     font_family_any_text: item.font_family_any_text || "Arial",
     image_url: item.image_url || "",
-  }));
+  }))
 
   // Ordenar os slides pelo ID
   return mappedSlides.sort((a: Slide, b: Slide) => {
-    const idA = Number(a.id);
-    const idB = Number(b.id);
-    return idA - idB;
-  });
-};
+    const idA = Number(a.id)
+    const idB = Number(b.id)
+    return idA - idB
+  })
+}
 
 // Worker Saga para buscar slides
 function* fetchSlidesSaga(): Generator<any, void, Slide[]> {
