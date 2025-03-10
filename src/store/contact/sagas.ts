@@ -9,8 +9,11 @@ import {
 } from "./actions"
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
+const API_BASE_URL = process.env.REACT_APP_API_PROD;
+console.log("API_BASE_URL:", API_BASE_URL);
+
 const submitContactApi = async (formData: ContactFormData): Promise<void> => {
-  const response = await fetch("http://localhost:4000/contact/form", {
+  const response = await fetch(`${API_BASE_URL}/contact/form`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -27,7 +30,7 @@ const submitContactApi = async (formData: ContactFormData): Promise<void> => {
 const fetchContactsApi = async (): Promise<ContactResponse[]> => {
   const user = getUserLocalStorage();
   
-  const response = await fetch("http://localhost:4000/contact", {
+  const response = await fetch(`${API_BASE_URL}/contact`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
