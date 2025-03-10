@@ -1,22 +1,22 @@
 import { call, put, take, fork, Effect } from "redux-saga/effects"
 import { ContactActionTypes, ContactFormData, ContactResponse } from "./types"
-import { 
-  submitContactSuccess, 
-  submitContactFailure, 
+import {
+  submitContactSuccess,
+  submitContactFailure,
   submitContactRequest,
   fetchContactsSuccess,
-  fetchContactsFailure
+  fetchContactsFailure,
 } from "./actions"
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
-const API_BASE_URL = process.env.REACT_APP_API_PROD;
-console.log("API_BASE_URL:", API_BASE_URL);
+const API_BASE_URL = process.env.REACT_APP_API_PROD
+console.log("API_BASE_URL === contact:", API_BASE_URL)
 
 const submitContactApi = async (formData: ContactFormData): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/contact/form`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
   })
@@ -28,24 +28,23 @@ const submitContactApi = async (formData: ContactFormData): Promise<void> => {
 }
 
 const fetchContactsApi = async (): Promise<ContactResponse[]> => {
-  const user = getUserLocalStorage();
-  
+  const user = getUserLocalStorage()
+
   const response = await fetch(`${API_BASE_URL}/contact`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${user?.token}`
-    }
-  });
+      Authorization: `Bearer ${user?.token}`,
+    },
+  })
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+    const errorText = await response.text()
+    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`)
   }
-  
-  return response.json();
-};
 
+  return response.json()
+}
 
 function* submitContactSaga(action: ReturnType<typeof submitContactRequest>) {
   try {
@@ -57,8 +56,8 @@ function* submitContactSaga(action: ReturnType<typeof submitContactRequest>) {
       submitContactFailure(
         error instanceof Error
           ? error.message
-          : "Erro desconhecido ao enviar formulário"
-      )
+          : "Erro desconhecido ao enviar formulário",
+      ),
     )
   }
 }
@@ -72,8 +71,8 @@ function* fetchContactsSaga() {
       fetchContactsFailure(
         error instanceof Error
           ? error.message
-          : "Erro desconhecido ao buscar formulários"
-      )
+          : "Erro desconhecido ao buscar formulários",
+      ),
     )
   }
 }
@@ -82,7 +81,7 @@ function* watchContactSagas() {
   while (true) {
     const action = (yield take([
       ContactActionTypes.SUBMIT_CONTACT_REQUEST,
-      ContactActionTypes.FETCH_CONTACTS_REQUEST
+      ContactActionTypes.FETCH_CONTACTS_REQUEST,
     ])) as ReturnType<typeof submitContactRequest>
 
     if (action.type === ContactActionTypes.SUBMIT_CONTACT_REQUEST) {
