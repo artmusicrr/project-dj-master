@@ -10,7 +10,6 @@ import {
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
 const API_BASE_URL = process.env.REACT_APP_API_PROD
-console.log("API_BASE_URL === contact:", API_BASE_URL)
 
 const submitContactApi = async (formData: ContactFormData): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/contact/form`, {

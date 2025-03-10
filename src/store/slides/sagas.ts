@@ -8,7 +8,6 @@ import {
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
 const API_BASE_URL = process.env.REACT_APP_API_PROD
-console.log("API_BASE_URL === title:", API_BASE_URL)
 
 // Função para buscar slides via API
 const fetchSlidesApi = async () => {

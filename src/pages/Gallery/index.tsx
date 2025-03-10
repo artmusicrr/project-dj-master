@@ -7,7 +7,6 @@ import { fetchGalleryRequest } from "../../store/gallery/actions";
 import { HeaderPages } from "../../components/headerPages";
 
 const API_BASE_URL = process.env.REACT_APP_API_PROD
-console.log("API_BASE_URL === galery-PAGE:", API_BASE_URL)
 
 const Gallery: React.FC = () => {
     const dispatch = useDispatch();
