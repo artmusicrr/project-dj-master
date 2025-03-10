@@ -13,10 +13,11 @@ import {
 } from "./actions"
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
+const API_BASE_URL = process.env.REACT_APP_API_PROD;
 // API functions
 const fetchGalleryApi = async (): Promise<GalleryTypes[]> => {
   const user = getUserLocalStorage()
-  const response = await fetch("http://localhost:4000/gallery/images", {
+  const response = await fetch(`${API_BASE_URL}/gallery/images`, {
     headers: {
       "Authorization": `Bearer ${user?.token}`
     }
@@ -36,7 +37,7 @@ const uploadImageApi = async (payload: UploadImagePayload): Promise<GalleryTypes
   formData.append("description", payload.description)
   
   const user = getUserLocalStorage()
-  const response = await fetch("http://localhost:4000/gallery/upload", {
+  const response = await fetch(`${API_BASE_URL}/gallery/upload`, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${user?.token}`
@@ -55,7 +56,7 @@ const uploadImageApi = async (payload: UploadImagePayload): Promise<GalleryTypes
 const deleteImageApi = async (payload: DeleteImagePayload): Promise<string> => {
   try {
     const user = getUserLocalStorage()
-    const response = await fetch(`http://localhost:4000/gallery/image/${payload.filename}`, {
+    const response = await fetch(`${API_BASE_URL}/gallery/image/${payload.filename}`, {
       method: 'DELETE',
       headers: {
         "Authorization": `Bearer ${user?.token}`
