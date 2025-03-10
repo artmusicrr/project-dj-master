@@ -1,8 +1,11 @@
 import { SlideData } from "../types/typesAdm"
 import axios from "axios"
 
+const API_BASE_URL = process.env.REACT_APP_API_PROD
+console.log("API_BASE_URL === API:", API_BASE_URL)
+
 const api = axios.create({
-  baseURL: "http://localhost:4000/title",
+  baseURL: `${API_BASE_URL}/title`,
 })
 
 //
@@ -27,7 +30,7 @@ export const uploadImage = async (
 ): Promise<string> => {
   try {
     const response = await axios.post(
-      `http://localhost:4000/slides/upload/${idSelected}`,
+      `${API_BASE_URL}/slides/upload/${idSelected}`,
       formData,
       {
         headers: {

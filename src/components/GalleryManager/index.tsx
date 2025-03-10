@@ -9,6 +9,10 @@ import { GalleryTypes } from "../../store/gallery/types"
 import { useTheme } from "../../contexts/ThemeContext"
 import "./styles.css"
 
+const API_BASE_URL = process.env.REACT_APP_API_PROD
+console.log("API_BASE_URL === galery component:", API_BASE_URL)
+
+
 const GalleryManager: React.FC = () => {
   const [fileList, setFileList] = useState<any[]>([])
   const [description, setDescription] = useState("")
@@ -75,9 +79,9 @@ const GalleryManager: React.FC = () => {
   const getImageUrl = (image: GalleryTypes | string): string => {
     if (!image) return '';
     if (typeof image === 'string') {
-      return `http://localhost:4000${image}`;
+      return `${API_BASE_URL}${image}`;
     }
-    return `http://localhost:4000${image.image_url || image.src || ''}`;
+    return `${API_BASE_URL}${image.image_url || image.src || ''}`;
   }
   
   const getImageId = (image: GalleryTypes | string): string => {
