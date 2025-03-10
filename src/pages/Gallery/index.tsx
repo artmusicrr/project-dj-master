@@ -6,6 +6,9 @@ import { RootState } from "../../store";
 import { fetchGalleryRequest } from "../../store/gallery/actions";
 import { HeaderPages } from "../../components/headerPages";
 
+const API_BASE_URL = process.env.REACT_APP_API_PROD
+console.log("API_BASE_URL === galery-PAGE:", API_BASE_URL)
+
 const Gallery: React.FC = () => {
     const dispatch = useDispatch();
     const [selectedImage, setSelectedImage] = useState<{ url: string; alt: string } | null>(null);
@@ -28,12 +31,12 @@ const Gallery: React.FC = () => {
                         key={index}
                         className="gallery-item"
                         onClick={() => setSelectedImage({ 
-                            url: `http://localhost:4000${imagePath}`, 
+                            url: `${API_BASE_URL}${imagePath}`, 
                             alt: 'Gallery Image' 
                         })}
                     >
                         <img 
-                            src={`http://localhost:4000${imagePath}`} 
+                            src={`${API_BASE_URL}${imagePath}`} 
                             alt="Gallery Image" 
                             loading="lazy" 
                         />

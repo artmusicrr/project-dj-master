@@ -14,6 +14,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { fetchSlidesRequest } from "../../store/slides/actions"
 
+const API_BASE_URL = process.env.REACT_APP_API_PROD
+console.log("API_BASE_URL === section:", API_BASE_URL)
+
 const Section: React.FC<ICustonTitle> = () => {
   const sectionRef = useRef<HTMLElement>(null)
   const [activeContentIndex, setActiveContentIndex] = useState(0)
@@ -70,7 +73,7 @@ const Section: React.FC<ICustonTitle> = () => {
       {slides.map((slide, index) => (
         <React.Fragment key={slide.id}>
           <img
-            src={`http://localhost:4000${slide.image_url}`}
+            src={`${API_BASE_URL}${slide.image_url}`}
             alt={`Slide ${slide.id}`}
             className={`video-slide ${index === activeContentIndex ? "active" : ""
               }`}
