@@ -19,7 +19,6 @@ import {
 import { getUserLocalStorage } from "../../contexts/AuthProvider/util"
 
 const API_BASE_URL = process.env.REACT_APP_API_PROD
-console.log("API_BASE_URL === galery:", API_BASE_URL)
 
 // API functions
 const fetchGalleryApi = async (): Promise<GalleryTypes[]> => {
