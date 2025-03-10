@@ -10,8 +10,6 @@ import { useTheme } from "../../contexts/ThemeContext"
 import "./styles.css"
 
 const API_BASE_URL = process.env.REACT_APP_API_PROD
-console.log("API_BASE_URL === galery component:", API_BASE_URL)
-
 
 const GalleryManager: React.FC = () => {
   const [fileList, setFileList] = useState<any[]>([])
