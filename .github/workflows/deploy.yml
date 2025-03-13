@@ -1,0 +1,30 @@
+name: Deploy to Google Cloud E2
+
+on:
+  push:
+    branches:
+      - main # ou a branch que quiser usar para deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: Build project
+        run: |
+          npm install
+          npm run build  # ou outro comando de build
+
+      - name: Deploy files via SSH
+        run: |
+          rsync -avz --delete ./dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/html/  # Ajuste o caminho conforme seu Nginx
