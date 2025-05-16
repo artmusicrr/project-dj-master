@@ -1,10 +1,10 @@
-# Etapa 1: Construir a aplicação frontend
+# Etapa 1: Build da aplicação React
 FROM node:18 as build
 
 WORKDIR /app
 COPY . .
-RUN npm install
-RUN npm run build   # Isso vai gerar a build da sua aplicação, geralmente na pasta "build"
+RUN npm install --legacy-peer-deps
+RUN npm run build   
 
 # Etapa 2: Usar Nginx para servir os arquivos
 FROM nginx:alpine
